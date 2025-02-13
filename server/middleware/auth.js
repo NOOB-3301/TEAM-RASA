@@ -1,5 +1,13 @@
-const jwt = require('jsonwebtoken');
-const SECRET = 'SECr3t';  // This should be in an environment variable in a real application
+// const jwt = require('jsonwebtoken');
+// const SECRET = 'SECr3t';  // This should be in an environment variable in a real application
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+const SECRET = process.env.SECRET_KEY
+if (!SECRET) {
+  console.log("secret key is missing")
+  process.exit()
+}
 
 const authenticateJwt = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -17,7 +25,4 @@ const authenticateJwt = (req, res, next) => {
   }
 };
 
-module.exports = {
-    authenticateJwt,
-    SECRET
-}
+export {authenticateJwt,SECRET}

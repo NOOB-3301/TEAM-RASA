@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const adminRouter = require("./routes/admin");
-const userRouter = require("./routes/user");
+const adminRouter = require("./routes/i_created_new_one/admin");
+const userRouter = require("./routes/i_created_new_one/user");
 const rateLimit = require("express-rate-limit");
 const app = express();
 
