@@ -4,6 +4,10 @@ import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
 const SECRET = process.env.SECRET_KEY
+if (!SECRET) {
+  console.log("secret key is missing")
+  process.exit()
+}
 
 const authenticateJwt = (req, res, next) => {
   const authHeader = req.headers.authorization;
