@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaArrowRight, FaChalkboardTeacher, FaUsers, FaBook, FaGlobe, FaHandsHelping } from "react-icons/fa";
-import { motion } from "framer-motion";
-import AnimatedButton from "../ButtonComp";
-import Navbar from "../Navbar";
+import { FaArrowRight, FaChalkboardTeacher, FaUsers, FaBook, FaGlobe, FaHandsHelping, FaStar, FaGraduationCap, FaClock, FaChartLine } from "react-icons/fa";
 
 const words = ["Education", "Learning", "Opportunities", "Communities", "Futures"];
 
@@ -36,91 +33,220 @@ export default function LandingPage() {
   }, [subIndex, index]);
 
   return (
-    <>
-    <div className="overflow-x-hidden bg-gray-50 min-h-screen flex flex-col items-center">      
-      {/* Hero Section */}
-      <section className="relative flex flex-col items-center text-center h-screen justify-center max-w-3xl px-6">
-        <motion.h1 
-          className="text-7xl sm:text-8xl font-extrabold text-gray-900 drop-shadow-lg"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          RASA
-        </motion.h1>
-        <div className="flex flex-col items-center mt-4">
-          <span className="text-xl sm:text-2xl font-semibold text-gray-600">Empowering Local Teachers, Transforming</span>
-          <motion.span 
-            className="relative inline-block w-fit text-3xl sm:text-4xl font-bold text-gray-900"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <span className="absolute inset-0 w-full bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-lg opacity-50"></span>
-            <span className="relative">{text}</span>
-          </motion.span>
+    <div className="overflow-x-hidden bg-gradient-to-b from-[#f0f4ff] to-white">
+      {/* Hero Section with Stats */}
+      <section className="relative min-h-screen">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        
+        <div className="container mx-auto px-6 pt-32 pb-20">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8">
+              <h1 className="text-7xl font-extrabold text-gray-900">
+                RASA
+                <div className="text-2xl font-semibold text-[#0F6B5E] mt-4">
+                  Empowering Local Teachers, Transforming
+                </div>
+                <div className="text-4xl mt-2 min-h-[48px]">{text}</div>
+              </h1>
+              
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Join our platform to transform education through innovative teaching methods, 
+                personalized learning experiences, and a supportive global community.
+              </p>
+
+              <div className="flex gap-6">
+                <button className="px-8 py-4 bg-[#0F6B5E] text-white rounded-xl font-bold hover:bg-[#0a4e42] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  Get Started
+                </button>
+                <button className="px-8 py-4 border-2 border-[#0F6B5E] text-[#0F6B5E] rounded-xl font-bold hover:bg-[#0F6B5E] hover:text-white transform hover:scale-105 transition-all duration-300">
+                  Explore Courses
+                </button>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#0F6B5E] rounded-3xl opacity-10 blur-2xl"></div>
+              <div className="relative bg-white p-8 rounded-3xl shadow-2xl">
+                <div className="grid grid-cols-2 gap-8">
+                  {[
+                    { number: "10K+", label: "Active Students" },
+                    { number: "1000+", label: "Expert Teachers" },
+                    { number: "500+", label: "Courses" },
+                    { number: "95%", label: "Success Rate" }
+                  ].map((stat, idx) => (
+                    <div key={idx} className="text-center p-4 bg-gray-50 rounded-xl hover:shadow-md transition-all duration-300">
+                      <div className="text-3xl font-bold text-[#0F6B5E]">{stat.number}</div>
+                      <div className="text-gray-600 mt-2">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        {/* Buttons */}
-        <div className="mt-8 flex justify-center space-x-6">
-          <AnimatedButton text="Get Started" onClick={() => window.location.href = "/signup"} variant="primary" />
-          <AnimatedButton text="Explore Courses" onClick={() => window.location.href = "/courses"} variant="secondary" />
-        </div>
-      </section>
 
-      {/* About Us Section */}
-      <section className="mt-32 text-center px-6 max-w-4xl">
-        <h2 className="text-5xl font-bold text-gray-900">About Us</h2>
-        <p className="mt-6 text-xl text-gray-700 leading-relaxed">
-          RASA is dedicated to connecting local educators with students, providing quality educational resources, and fostering a strong learning community. Our mission is to make education accessible and impactful for everyone.
-        </p>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="mt-32 text-center px-6 max-w-5xl">
-        <h2 className="text-5xl font-bold text-gray-900">Why Choose Us?</h2>
-        <p className="mt-6 text-xl text-gray-700">
-          We provide high-quality learning experiences tailored to local needs, ensuring every student gets the best education possible.
-        </p>
-
-        {/* Features Grid */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-12">
-          {[{
-            icon: <FaChalkboardTeacher className="text-6xl text-blue-500" />, 
-            title: "Expert Teachers", 
-            desc: "Learn from certified and experienced educators."
-          }, {
-            icon: <FaUsers className="text-6xl text-purple-500" />, 
-            title: "Community Support", 
-            desc: "Join a growing network of passionate learners."
-          }, {
-            icon: <FaBook className="text-6xl text-red-500" />, 
-            title: "Quality Content", 
-            desc: "Access well-structured courses and materials."
-          }, {
-            icon: <FaGlobe className="text-6xl text-green-500" />, 
-            title: "Global Reach", 
-            desc: "Connect with educators and learners worldwide."
-          }, {
-            icon: <FaHandsHelping className="text-6xl text-orange-500" />, 
-            title: "Mentorship Programs", 
-            desc: "Get guidance from experienced professionals."
-          }].map(({ icon, title, desc }, idx) => (
-            <motion.div 
-              key={idx} 
-              className="flex flex-col items-center p-8 bg-white shadow-xl rounded-2xl border border-gray-200"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.2 }}
-              whileHover={{ scale: 1.1 }}
-            >
-              {icon}
-              <h3 className="mt-6 text-2xl font-semibold text-gray-900">{title}</h3>
-              <p className="text-lg text-gray-600 mt-3 leading-relaxed">{desc}</p>
-            </motion.div>
+        {/* Floating Achievement Cards */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex gap-6">
+          {[
+            { icon: <FaStar />, text: "Top Rated Platform" },
+            { icon: <FaGraduationCap />, text: "Certified Courses" },
+            { icon: <FaClock />, text: "Flexible Learning" }
+          ].map((item, idx) => (
+            <div key={idx} className="flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+              <span className="text-[#0F6B5E]">{item.icon}</span>
+              <span className="font-semibold">{item.text}</span>
+            </div>
           ))}
         </div>
       </section>
+
+      {/* Featured Courses Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl font-bold text-center mb-16">Featured Courses</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Advanced Teaching Methods",
+                category: "Education",
+                rating: "4.9",
+                students: "2.5k",
+                price: "$99"
+              },
+              {
+                title: "Child Psychology Basics",
+                category: "Psychology",
+                rating: "4.8",
+                students: "1.8k",
+                price: "$89"
+              },
+              {
+                title: "Digital Classroom Management",
+                category: "Technology",
+                rating: "4.7",
+                students: "3.2k",
+                price: "$79"
+              }
+            ].map((course, idx) => (
+              <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <div className="h-48 bg-gradient-to-r from-[#0F6B5E] to-[#14887a] relative overflow-hidden">
+                  <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
+                </div>
+                <div className="p-6">
+                  <div className="text-sm text-[#0F6B5E] font-semibold mb-2">{course.category}</div>
+                  <h3 className="text-xl font-bold mb-4 group-hover:text-[#0F6B5E] transition-colors duration-300">
+                    {course.title}
+                  </h3>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <FaStar className="text-yellow-400" />
+                      <span>{course.rating}</span>
+                      <span className="text-gray-400">({course.students} students)</span>
+                    </div>
+                    <div className="font-bold text-[#0F6B5E]">{course.price}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl font-bold text-center mb-16">Why Choose Us?</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <FaChalkboardTeacher className="text-5xl text-[#0F6B5E]" />,
+                title: "Expert Teachers",
+                desc: "Learn from certified and experienced educators passionate about student success."
+              },
+              {
+                icon: <FaUsers className="text-5xl text-[#0F6B5E]" />,
+                title: "Community Support",
+                desc: "Join a thriving community of educators and learners for collaborative growth."
+              },
+              {
+                icon: <FaBook className="text-5xl text-[#0F6B5E]" />,
+                title: "Quality Content",
+                desc: "Access thoroughly vetted, professionally designed course materials."
+              },
+              {
+                icon: <FaGlobe className="text-5xl text-[#0F6B5E]" />,
+                title: "Global Reach",
+                desc: "Connect with educators and students from around the world."
+              },
+              {
+                icon: <FaHandsHelping className="text-5xl text-[#0F6B5E]" />,
+                title: "Mentorship",
+                desc: "Get personalized guidance from experienced professionals."
+              },
+              {
+                icon: <FaChartLine className="text-5xl text-[#0F6B5E]" />,
+                title: "Career Growth",
+                desc: "Advance your teaching career with professional development opportunities."
+              }
+            ].map((feature, idx) => (
+              <div key={idx} className="group p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="flex flex-col items-center text-center space-y-4">
+                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl font-bold text-center mb-16">What Our Users Say</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              {
+                name: "RASA JAISWAL",
+                role: "Math Teacher",
+                text: "RASA has transformed my teaching approach. The resources and community support are invaluable."
+              },
+              {
+                name: "RASA SHAW",
+                role: "Science Educator",
+                text: "The professional development opportunities here are outstanding. I've grown so much as an educator."
+              }
+            ].map((testimonial, idx) => (
+              <div key={idx} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                <div className="flex flex-col space-y-4">
+                  <div className="text-[#0F6B5E]">★★★★★</div>
+                  <p className="text-gray-600 italic">"{testimonial.text}"</p>
+                  <div>
+                    <div className="font-bold">{testimonial.name}</div>
+                    <div className="text-sm text-gray-500">{testimonial.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-[#0F6B5E]">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-4xl font-bold text-white mb-8">Ready to Transform Your Teaching Journey?</h2>
+          <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+            Join thousands of educators who are already making a difference with RASA.
+          </p>
+          <button className="px-8 py-4 bg-white text-[#0F6B5E] rounded-xl font-bold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+            Get Started Today
+          </button>
+        </div>
+      </section>
     </div>
-    </>
   );
 }
