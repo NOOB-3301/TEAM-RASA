@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaArrowRight, FaChalkboardTeacher, FaUsers, FaBook, FaGlobe, FaHandsHelping } from "react-icons/fa";
 import { motion } from "framer-motion";
 import AnimatedButton from "../ButtonComp";
+import Navbar from "../Navbar";
 
 const words = ["Education", "Learning", "Opportunities", "Communities", "Futures"];
 
@@ -35,7 +36,8 @@ export default function LandingPage() {
   }, [subIndex, index]);
 
   return (
-    <div className="overflow-x-hidden bg-gray-50 min-h-screen flex flex-col items-center">
+    <>
+    <div className="overflow-x-hidden bg-gray-50 min-h-screen flex flex-col items-center">      
       {/* Hero Section */}
       <section className="relative flex flex-col items-center text-center h-screen justify-center max-w-3xl px-6">
         <motion.h1 
@@ -60,8 +62,8 @@ export default function LandingPage() {
         </div>
         {/* Buttons */}
         <div className="mt-8 flex justify-center space-x-6">
-          <AnimatedButton text="Get Started" onClick={() => window.location.href = "/"} variant="primary" />
-          <AnimatedButton text="Explore Courses" onClick={() => window.location.href = "/"} variant="secondary" />
+          <AnimatedButton text="Get Started" onClick={() => window.location.href = "/signup"} variant="primary" />
+          <AnimatedButton text="Explore Courses" onClick={() => window.location.href = "/courses"} variant="secondary" />
         </div>
       </section>
 
@@ -119,5 +121,6 @@ export default function LandingPage() {
         </div>
       </section>
     </div>
+    </>
   );
 }

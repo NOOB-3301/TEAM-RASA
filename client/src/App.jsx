@@ -1,17 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import LandingPage from './Components/LandingPage.jsx/LandingPage'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LandingPage from "./Components/LandingPage.jsx/LandingPage";
+import Login from "./Components/Auth/Login";
+import Signup from "./Components/Auth/Signup";
+import CourseList from "./Components/Courses/CourseList";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-    <LandingPage/>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/signup" element={<Signup/>} />
+        <Route path="/courses" element={<CourseList/>} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
