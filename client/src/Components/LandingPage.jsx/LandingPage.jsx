@@ -111,21 +111,21 @@ export default function LandingPage() {
                 category: "Education",
                 rating: "4.9",
                 students: "2.5k",
-                price: "$99"
+                price: "6000"
               },
               {
                 title: "Child Psychology Basics",
                 category: "Psychology",
                 rating: "4.8",
                 students: "1.8k",
-                price: "$89"
+                price: "7999"
               },
               {
                 title: "Digital Classroom Management",
                 category: "Technology",
                 rating: "4.7",
                 students: "3.2k",
-                price: "$79"
+                price: "9999"
               }
             ].map((course, idx) => (
               <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
