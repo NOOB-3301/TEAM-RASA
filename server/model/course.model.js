@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Admin } from "./admin.model";
+import { Admin } from "./admin.model.js";
 
 const courseSchema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -12,4 +12,4 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model("Course", courseSchema);
 
-export { Course };
+export default Course;
