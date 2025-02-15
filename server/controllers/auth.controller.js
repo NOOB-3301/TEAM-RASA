@@ -98,7 +98,7 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(401).json({ message: "No user found with this email" });
         }
-
+        console.log(user)
         // ✅ Compare password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
@@ -107,7 +107,7 @@ const login = async (req, res) => {
 
         // ✅ Retrieve role details (Student or Teacher)
         let roleData;
-        if (user.role === "teacher") {
+        if (user.role === "Teacher") {
             roleData = await Teacher.findById(user.roleId);
         } else {
             roleData = await Student.findById(user.roleId);
@@ -115,7 +115,7 @@ const login = async (req, res) => {
 
         // ✅ Generate JWT Token
         const token = jwt.sign(
-            { userId: user._id, role: user.role, roleId:roleData._id },
+            { userId: user._id , role: user.role, roleId:roleData._id },
             secretkey, // Store this in your .env file
             { expiresIn: "7d" }
         );
