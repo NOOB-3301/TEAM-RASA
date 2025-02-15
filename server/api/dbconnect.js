@@ -5,6 +5,7 @@ dotenv.config()
 // Database connection
 export const dbConnect = async () => {
   const url = process.env.MONGO_URI;
+  console.log(url)
 
   if (!url) {
     console.error('No URL received from env. Check .env file path.');

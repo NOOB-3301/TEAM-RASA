@@ -13,16 +13,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //base route test route
-app.use('/',async (req,res) => {
+app.use('/test',async (req,res) => {
     res.send("api is working, mongdb connected")
 })
 
 //routes import
-import { userRouter } from '../routes/user.routes.js';
-import { adminRouter } from '../routes/admin.routes.js';
+// import { userRouter } from '../routes/user.routes.js';
+// import { adminRouter } from '../routes/admin.routes.js';
+import { authRouter } from '../routes/auth.routes.js';
 
 //routes use
-app.use('/api/v1/user',userRouter)
-app.use('/api/v1/admin',adminRouter)
+// app.use('/api/v1/user',userRouter)
+// app.use('/api/v1/admin',adminRouter)
+app.use("/api/v1/auth", authRouter)
 
 export {app}
