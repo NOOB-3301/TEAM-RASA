@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const courseSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -10,4 +11,4 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model("Course", courseSchema);
 
-export { Course };
+export default Course;

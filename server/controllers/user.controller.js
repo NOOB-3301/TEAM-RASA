@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { User } from '../model/user.model.js';
 import { SECRET } from '../middleware/auth.js';
-import { Course } from '../model/course.model.js';
+import  Course  from '../model/course.model.js';
 
 export const signup = async (req, res) => {
     const { username, password } = req.body;

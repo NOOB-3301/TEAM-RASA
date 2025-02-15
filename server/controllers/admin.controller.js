@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { SECRET } from '../middleware/auth.js';
 import { Admin } from '../model/admin.model.js';
-import { Course } from '../model/course.model.js';
+import  Course  from '../model/course.model.js';
 export const getAdminProfile = async (req, res) => {
     const admin = await Admin.findOne({ username: req.user.username });
     if (!admin) {
@@ -63,5 +63,3 @@ export const getCourseById = async (req, res) => {
     res.json({ course });
 };
 
-
-// export {adminLogin,adminSignup,createCourse,updateCourse,getCourseById,getAllCourses,getAdminProfile}
