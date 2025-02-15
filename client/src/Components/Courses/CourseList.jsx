@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import CourseCard from "./CourseCard";
 import Navbar from "../Navbar";
+import {Link} from 'react-router-dom'
 
 export default function CourseList() {
   const [courses, setCourses] = useState([]);
@@ -14,7 +15,8 @@ export default function CourseList() {
       try {
         const response = await fetch("http://localhost:3000/api/v1/course/getallcourse");
         const data = await response.json();
-
+        console.log(data.fetchedCourses)
+        console.log(data.fetchedCourses[13].user)
         if (response.ok) {
           setCourses(data.fetchedCourses || []);
         } else {
@@ -86,7 +88,9 @@ export default function CourseList() {
                 transition={{ duration: 0.5 }}
               >
                 {paginatedCourses.map((course, index) => (
-                  <CourseCard key={index} course={course} />
+                  <Link key={index} to={`/courses/details/${course._id}`}>
+                  <CourseCard course={course} />
+                  </Link>
                 ))}
               </motion.div>
 

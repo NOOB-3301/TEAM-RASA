@@ -13,11 +13,23 @@ export default function CourseCard({ course }) {
       {/* Glowing border effect */}
       <div className="absolute inset-0 border-2 border-transparent rounded-lg group-hover:border-green-500 transition-all duration-300"></div>
 
+      {/* Course Image */}
+      {course.imageLink && (
+        <motion.img
+          src={course.imageLink}
+          alt={course.title}
+          className="w-full h-48 object-cover rounded-lg shadow-md mb-4"
+          whileHover={{ scale: 1.02 }}
+        />
+      )}
+
+      {/* Course Title */}
       <h2 className="text-xl font-bold text-green-700">{course.title}</h2>
       <p className="text-green-600 mt-2">{course.desc}</p>
       
+      {/* Course Details */}
       <div className="mt-4">
-        <p className="text-sm text-green-700 font-semibold">Instructor: {course.teacherName}</p>
+        <p className="text-sm text-green-700 font-semibold">Instructor: {course.user?.username}</p>
         <p className="text-sm text-green-500">Lecture Timing: {course.lectureTiming}</p>
       </div>
     </motion.div>

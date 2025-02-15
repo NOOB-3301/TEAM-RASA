@@ -35,7 +35,7 @@ const register = async (req, res) => {
         let createdRole;
 
         // ✅ Create either a Teacher or Student
-        if (role === "teacher") {
+        if (role == "Teacher") {
             const {qualification} = req.body
             if (!qualification) {
                 return res.status(400).json({ message: "Qualification is required" });
