@@ -1,5 +1,5 @@
 import express from 'express';
-import { authenticateJwt } from '../middleware/auth.js';
+import { authenticateJwt } from '../server/middleware/auth.js';
 import { 
     getAdminProfile, 
     adminSignup, 
@@ -8,7 +8,7 @@ import {
     updateCourse, 
     getAllCourses, 
     getCourseById 
-} from '../controllers/admin.controller.js';
+} from './admin.controller.js';
 
 const adminRouter = express.Router();
 

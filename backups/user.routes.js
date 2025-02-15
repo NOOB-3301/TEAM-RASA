@@ -1,6 +1,6 @@
 import express from 'express';
 // import { authenticateJwt } from '../../middleware/auth.js';
-import { authenticateJwt } from '../middleware/auth.js';
+import { authenticateJwt } from '../server/middleware/auth.js';
 import { 
     // userSignup, 
     // userLogin, 
