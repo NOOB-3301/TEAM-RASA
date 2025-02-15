@@ -36,13 +36,14 @@ const register = async (req, res) => {
 
         // ✅ Create either a Teacher or Student
         if (role === "teacher") {
+            const {qualification} = req.body
             if (!qualification) {
                 return res.status(400).json({ message: "Qualification is required" });
             }
             createdRole = await Teacher.create({
                 subjects: [],
                 publishedCourses: [],
-                qualification
+                Qualification:qualification
             });
         } else {
             createdRole = await Student.create({
@@ -107,7 +108,7 @@ const login = async (req, res) => {
 
         // ✅ Retrieve role details (Student or Teacher)
         let roleData;
-        if (user.role === "Teacher") {
+        if (user.role === "teacher") {
             roleData = await Teacher.findById(user.roleId);
         } else {
             roleData = await Student.findById(user.roleId);
