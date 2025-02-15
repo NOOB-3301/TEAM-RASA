@@ -1,7 +1,24 @@
 import { useState, useEffect } from "react";
-import { FaArrowRight, FaChalkboardTeacher, FaUsers, FaBook, FaGlobe, FaHandsHelping, FaStar, FaGraduationCap, FaClock, FaChartLine } from "react-icons/fa";
+import {
+  FaChalkboardTeacher,
+  FaUsers,
+  FaBook,
+  FaGlobe,
+  FaHandsHelping,
+  FaStar,
+  FaGraduationCap,
+  FaClock,
+  FaChartLine,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-const words = ["Education", "Learning", "Opportunities", "Communities", "Futures"];
+const words = [
+  "Education",
+  "Learning",
+  "Opportunities",
+  "Communities",
+  "Futures",
+];
 
 export default function LandingPage() {
   const [text, setText] = useState("");
@@ -37,7 +54,7 @@ export default function LandingPage() {
       {/* Hero Section with Stats */}
       <section className="relative min-h-screen">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        
+
         <div className="container mx-auto px-6 pt-32 pb-20">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
@@ -48,16 +65,19 @@ export default function LandingPage() {
                 </div>
                 <div className="text-4xl mt-2 min-h-[48px]">{text}</div>
               </h1>
-              
+
               <p className="text-xl text-gray-600 leading-relaxed">
-                Join our platform to transform education through innovative teaching methods, 
-                personalized learning experiences, and a supportive global community.
+                Join our platform to transform education through innovative
+                teaching methods, personalized learning experiences, and a
+                supportive global community.
               </p>
 
               <div className="flex gap-6">
-                <button className="px-8 py-4 bg-[#0F6B5E] text-white rounded-xl font-bold hover:bg-[#0a4e42] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                  Get Started
-                </button>
+                <Link to={"/signup"}>
+                  <button className="px-8 py-4 bg-[#0F6B5E] text-white rounded-xl font-bold hover:bg-[#0a4e42] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                    Get Started
+                  </button>
+                </Link>
                 <button className="px-8 py-4 border-2 border-[#0F6B5E] text-[#0F6B5E] rounded-xl font-bold hover:bg-[#0F6B5E] hover:text-white transform hover:scale-105 transition-all duration-300">
                   Explore Courses
                 </button>
@@ -72,10 +92,15 @@ export default function LandingPage() {
                     { number: "10K+", label: "Active Students" },
                     { number: "1000+", label: "Expert Teachers" },
                     { number: "500+", label: "Courses" },
-                    { number: "95%", label: "Success Rate" }
+                    { number: "95%", label: "Success Rate" },
                   ].map((stat, idx) => (
-                    <div key={idx} className="text-center p-4 bg-gray-50 rounded-xl hover:shadow-md transition-all duration-300">
-                      <div className="text-3xl font-bold text-[#0F6B5E]">{stat.number}</div>
+                    <div
+                      key={idx}
+                      className="text-center p-4 bg-gray-50 rounded-xl hover:shadow-md transition-all duration-300"
+                    >
+                      <div className="text-3xl font-bold text-[#0F6B5E]">
+                        {stat.number}
+                      </div>
                       <div className="text-gray-600 mt-2">{stat.label}</div>
                     </div>
                   ))}
@@ -90,9 +115,12 @@ export default function LandingPage() {
           {[
             { icon: <FaStar />, text: "Top Rated Platform" },
             { icon: <FaGraduationCap />, text: "Certified Courses" },
-            { icon: <FaClock />, text: "Flexible Learning" }
+            { icon: <FaClock />, text: "Flexible Learning" },
           ].map((item, idx) => (
-            <div key={idx} className="flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+            <div
+              key={idx}
+              className="flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            >
               <span className="text-[#0F6B5E]">{item.icon}</span>
               <span className="font-semibold">{item.text}</span>
             </div>
@@ -103,7 +131,9 @@ export default function LandingPage() {
       {/* Featured Courses Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-16">Featured Courses</h2>
+          <h2 className="text-4xl font-bold text-center mb-16">
+            Featured Courses
+          </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
@@ -111,29 +141,34 @@ export default function LandingPage() {
                 category: "Education",
                 rating: "4.9",
                 students: "2.5k",
-                price: "6000"
+                price: "6000",
               },
               {
                 title: "Child Psychology Basics",
                 category: "Psychology",
                 rating: "4.8",
                 students: "1.8k",
-                price: "7999"
+                price: "7999",
               },
               {
                 title: "Digital Classroom Management",
                 category: "Technology",
                 rating: "4.7",
                 students: "3.2k",
-                price: "9999"
-              }
+                price: "9999",
+              },
             ].map((course, idx) => (
-              <div key={idx} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group">
+              <div
+                key={idx}
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
+              >
                 <div className="h-48 bg-gradient-to-r from-[#0F6B5E] to-[#14887a] relative overflow-hidden">
                   <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
                 </div>
                 <div className="p-6">
-                  <div className="text-sm text-[#0F6B5E] font-semibold mb-2">{course.category}</div>
+                  <div className="text-sm text-[#0F6B5E] font-semibold mb-2">
+                    {course.category}
+                  </div>
                   <h3 className="text-xl font-bold mb-4 group-hover:text-[#0F6B5E] transition-colors duration-300">
                     {course.title}
                   </h3>
@@ -141,9 +176,13 @@ export default function LandingPage() {
                     <div className="flex items-center gap-2">
                       <FaStar className="text-yellow-400" />
                       <span>{course.rating}</span>
-                      <span className="text-gray-400">({course.students} students)</span>
+                      <span className="text-gray-400">
+                        ({course.students} students)
+                      </span>
                     </div>
-                    <div className="font-bold text-[#0F6B5E]">{course.price}</div>
+                    <div className="font-bold text-[#0F6B5E]">
+                      {course.price}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -155,47 +194,58 @@ export default function LandingPage() {
       {/* Why Choose Us Section */}
       <section className="py-20">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-16">Why Choose Us?</h2>
+          <h2 className="text-4xl font-bold text-center mb-16">
+            Why Choose Us?
+          </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: <FaChalkboardTeacher className="text-5xl text-[#0F6B5E]" />,
+                icon: (
+                  <FaChalkboardTeacher className="text-5xl text-[#0F6B5E]" />
+                ),
                 title: "Expert Teachers",
-                desc: "Learn from certified and experienced educators passionate about student success."
+                desc: "Learn from certified and experienced educators passionate about student success.",
               },
               {
                 icon: <FaUsers className="text-5xl text-[#0F6B5E]" />,
                 title: "Community Support",
-                desc: "Join a thriving community of educators and learners for collaborative growth."
+                desc: "Join a thriving community of educators and learners for collaborative growth.",
               },
               {
                 icon: <FaBook className="text-5xl text-[#0F6B5E]" />,
                 title: "Quality Content",
-                desc: "Access thoroughly vetted, professionally designed course materials."
+                desc: "Access thoroughly vetted, professionally designed course materials.",
               },
               {
                 icon: <FaGlobe className="text-5xl text-[#0F6B5E]" />,
                 title: "Global Reach",
-                desc: "Connect with educators and students from around the world."
+                desc: "Connect with educators and students from around the world.",
               },
               {
                 icon: <FaHandsHelping className="text-5xl text-[#0F6B5E]" />,
                 title: "Mentorship",
-                desc: "Get personalized guidance from experienced professionals."
+                desc: "Get personalized guidance from experienced professionals.",
               },
               {
                 icon: <FaChartLine className="text-5xl text-[#0F6B5E]" />,
                 title: "Career Growth",
-                desc: "Advance your teaching career with professional development opportunities."
-              }
+                desc: "Advance your teaching career with professional development opportunities.",
+              },
             ].map((feature, idx) => (
-              <div key={idx} className="group p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div
+                key={idx}
+                className="group p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+              >
                 <div className="flex flex-col items-center text-center space-y-4">
                   <div className="transform group-hover:scale-110 transition-transform duration-300">
                     {feature.icon}
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.desc}</p>
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {feature.desc}
+                  </p>
                 </div>
               </div>
             ))}
@@ -206,27 +256,34 @@ export default function LandingPage() {
       {/* Testimonials Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-16">What Our Users Say</h2>
+          <h2 className="text-4xl font-bold text-center mb-16">
+            What Our Users Say
+          </h2>
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
                 name: "RASA JAISWAL",
                 role: "Math Teacher",
-                text: "RASA has transformed my teaching approach. The resources and community support are invaluable."
+                text: "RASA has transformed my teaching approach. The resources and community support are invaluable.",
               },
               {
                 name: "RASA SHAW",
                 role: "Science Educator",
-                text: "The professional development opportunities here are outstanding. I've grown so much as an educator."
-              }
+                text: "The professional development opportunities here are outstanding. I've grown so much as an educator.",
+              },
             ].map((testimonial, idx) => (
-              <div key={idx} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <div
+                key={idx}
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+              >
                 <div className="flex flex-col space-y-4">
                   <div className="text-[#0F6B5E]">★★★★★</div>
-                  <p className="text-gray-600 italic">"{testimonial.text}"</p>
+                  <p className="text-gray-600 italic">{testimonial.text}</p>
                   <div>
                     <div className="font-bold">{testimonial.name}</div>
-                    <div className="text-sm text-gray-500">{testimonial.role}</div>
+                    <div className="text-sm text-gray-500">
+                      {testimonial.role}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -238,9 +295,12 @@ export default function LandingPage() {
       {/* CTA Section */}
       <section className="py-20 bg-[#0F6B5E]">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold text-white mb-8">Ready to Transform Your Teaching Journey?</h2>
+          <h2 className="text-4xl font-bold text-white mb-8">
+            Ready to Transform Your Teaching Journey?
+          </h2>
           <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
-            Join thousands of educators who are already making a difference with RASA.
+            Join thousands of educators who are already making a difference with
+            RASA.
           </p>
           <button className="px-8 py-4 bg-white text-[#0F6B5E] rounded-xl font-bold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
             Get Started Today

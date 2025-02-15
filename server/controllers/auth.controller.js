@@ -5,22 +5,21 @@ import { User } from "../model/user.model.js";
 import { Student } from "../model/student.model.js";
 import dotenv from 'dotenv'
 
-dotenv.config
+dotenv.config()
 
-
-const secretkey= process.env.SECRET_KEY
+const secretkey = process.env.SECRET_KEY;
 if (!secretkey) {
-    console.log("Secret key not found")
-    process.exit()
+    console.log("Secret key not found");
+    process.exit();
 }
 
 
 const register = async (req, res) => {
     try {
-        const { username, email, password, isTeacher, qualification } = req.body;
+        const { username, email, password, role } = req.body;
 
         // ✅ Check if all required fields are provided
-        if (!username || !email || !password) {
+        if (!username || !email || !password || !role) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
@@ -34,10 +33,9 @@ const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         let createdRole;
-        let roleType = isTeacher ? "Teacher" : "Student";
 
         // ✅ Create either a Teacher or Student
-        if (isTeacher) {
+        if (role === "teacher") {
             if (!qualification) {
                 return res.status(400).json({ message: "Qualification is required" });
             }
@@ -58,7 +56,7 @@ const register = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            role: roleType,
+            role: role,
             roleId: createdRole._id
         });
 
@@ -73,17 +71,10 @@ const register = async (req, res) => {
             { expiresIn: "7d" }
         );
 
-        console.log(`${roleType} registered successfully:`, user.email);
+        
         return res.status(201).json({
-            message: `${roleType} created successfully`,
-            token,
-            user: {
-                _id: user._id,
-                username: user.username,
-                email: user.email,
-                role: user.role
-            },
-            roleData: createdRole
+            message: `${role} created successfully`,
+            token
         });
 
     } catch (error) {
