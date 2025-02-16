@@ -8,6 +8,8 @@ import PublicRoute from "./Components/PublicRoute";
 import ProtectedRoute from "./Components/ProtectedRoutes";
 import Teacherhome from "./Components/teacher/Teacherhome";
 import Studenthome from "./Components/student/Studenthome";
+import CourseView from "./Components/Courses/CourseView";
+import LiveClass from "./Components/StreamVideo/LiveClass";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         {/* can be accessed by anyone */}
         <Route path="/courses" element={<CourseList />} />
         <Route path="/courses/details/:id" element={<CourseDetails />} />
+        <Route path="/courses/view/:id" element={<CourseView />} />
+        <Route path="/courses/:id/create-meeting" element={<LiveClass />} />
 
         {/* can be accessed by uauthenticate user */}
         <Route element={<PublicRoute />}>
@@ -28,6 +32,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/teacher" element={<Teacherhome />} />
           <Route path="/student" element={<Studenthome />} />
+          <Route path="/courses" element={<CourseList />} />
         </Route>
       </Routes>
     </Router>

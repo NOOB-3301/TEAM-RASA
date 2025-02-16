@@ -2,28 +2,29 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../Navbar";
 import CourseCard from "../Courses/CourseCard";
-import LiveClass from "./LiveClass"; // Import the video call component
 
 const userId = localStorage.getItem("u_id");
 
 function Teacherhome() {
   const [courses, setCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLive, setIsLive] = useState(false); // Manage live class state
   const coursesPerPage = 4;
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const token = localStorage.getItem("auth_token"); 
-        const response = await fetch("http://localhost:3000/api/v1/course/getcoursebyeacher", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ u_id: userId }),
-        });
+        const token = localStorage.getItem("auth_token");
+        const response = await fetch(
+          "http://localhost:3000/api/v1/course/getcoursebyeacher",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ u_id: userId }),
+          }
+        );
 
         const data = await response.json();
         if (response.ok) {
@@ -37,7 +38,7 @@ function Teacherhome() {
     };
 
     if (userId) fetchCourses();
-  }, [userId]);
+  }, []);
 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
@@ -54,20 +55,11 @@ function Teacherhome() {
 
         {/* Buttons */}
         <div className="flex gap-4 mb-6">
-          {/* Start Live Class Button */}
-          <motion.button
-            onClick={() => setIsLive(true)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-48 p-4 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-200"
-          >
-            Start Live Class
-          </motion.button>
-
+          {" "}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-48 p-4 bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-200"
+            className="w-48 p-4 cursor-pointer bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-200"
           >
             Publish Course
           </motion.button>
@@ -79,7 +71,9 @@ function Teacherhome() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md"
         >
-          <h2 className="text-xl font-bold mb-4 text-green-700">Published Courses</h2>
+          <h2 className="text-xl font-bold mb-4 text-green-700">
+            Published Courses
+          </h2>
           {currentCourses.length > 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
@@ -99,7 +93,9 @@ function Teacherhome() {
               ))}
             </motion.div>
           ) : (
-            <p className="text-gray-600 text-center">No courses published yet.</p>
+            <p className="text-gray-600 text-center">
+              No courses published yet.
+            </p>
           )}
 
           {courses.length > coursesPerPage && (
@@ -115,7 +111,9 @@ function Teacherhome() {
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
                 className={`px-4 py-2 rounded-lg text-white font-bold ${
-                  currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+                  currentPage === 1
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-green-600 hover:bg-green-700"
                 } transition duration-200`}
               >
                 Previous
@@ -126,10 +124,14 @@ function Teacherhome() {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
                 disabled={currentPage === totalPages}
                 className={`px-4 py-2 rounded-lg text-white font-bold ${
-                  currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+                  currentPage === totalPages
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-green-600 hover:bg-green-700"
                 } transition duration-200`}
               >
                 Next

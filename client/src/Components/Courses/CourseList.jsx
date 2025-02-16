@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import CourseCard from "./CourseCard";
 import Navbar from "../Navbar";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 export default function CourseList() {
   const [courses, setCourses] = useState([]);
@@ -13,10 +13,12 @@ export default function CourseList() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/course/getallcourse");
+        const response = await fetch(
+          "http://localhost:3000/api/v1/course/getallcourse"
+        );
         const data = await response.json();
-        console.log(data.fetchedCourses)
-        console.log(data.fetchedCourses[13].user)
+        console.log(data.fetchedCourses);
+        console.log(data.fetchedCourses[13].user);
         if (response.ok) {
           setCourses(data.fetchedCourses || []);
         } else {
@@ -45,13 +47,17 @@ export default function CourseList() {
         <div className="mt-12"></div>
 
         {loading ? (
-          <div className="text-center text-green-700 font-bold text-lg">Loading courses...</div>
+          <div className="text-center text-green-700 font-bold text-lg">
+            Loading courses...
+          </div>
         ) : (
           <>
             {/* Featured Courses */}
             <section>
-              <h2 className="text-2xl font-bold text-center text-green-700">Featured Courses</h2>
-              <motion.div 
+              <h2 className="text-2xl font-bold text-center text-green-700">
+                Featured Courses
+              </h2>
+              <motion.div
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -65,8 +71,10 @@ export default function CourseList() {
 
             {/* Recently Published */}
             <section>
-              <h2 className="text-2xl font-bold text-center text-green-700">Recently Published</h2>
-              <motion.div 
+              <h2 className="text-2xl font-bold text-center text-green-700">
+                Recently Published
+              </h2>
+              <motion.div
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -80,8 +88,10 @@ export default function CourseList() {
 
             {/* Explore Courses (With Pagination) */}
             <section>
-              <h2 className="text-2xl font-bold text-center text-green-700">Explore Courses</h2>
-              <motion.div 
+              <h2 className="text-2xl font-bold text-center text-green-700">
+                Explore Courses
+              </h2>
+              <motion.div
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -89,7 +99,7 @@ export default function CourseList() {
               >
                 {paginatedCourses.map((course, index) => (
                   <Link key={index} to={`/courses/details/${course._id}`}>
-                  <CourseCard course={course} />
+                    <CourseCard course={course} />
                   </Link>
                 ))}
               </motion.div>
@@ -97,7 +107,9 @@ export default function CourseList() {
               {/* Pagination Controls */}
               <div className="flex justify-center space-x-4 mt-6">
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
                   disabled={currentPage === 1}
                   className="px-4 py-2 rounded bg-green-500 hover:bg-green-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -109,7 +121,9 @@ export default function CourseList() {
                 </span>
 
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
                   disabled={currentPage === totalPages}
                   className="px-4 py-2 rounded bg-green-500 hover:bg-green-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >

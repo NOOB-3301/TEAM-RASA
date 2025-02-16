@@ -9,17 +9,31 @@ import {
 import { StreamTheme, ParticipantView } from "@stream-io/video-react-sdk";
 
 import "@stream-io/video-react-sdk/dist/css/styles.css";
+import { jwtDecode } from "jwt-decode";
 
 const apiKey = "mmhfdzb5evj2";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3Byb250by5nZXRzdHJlYW0uaW8iLCJzdWIiOiJ1c2VyL1RhbG9uX0thcnJkZSIsInVzZXJfaWQiOiJUYWxvbl9LYXJyZGUiLCJ2YWxpZGl0eV9pbl9zZWNvbmRzIjo2MDQ4MDAsImlhdCI6MTczOTY0NDkyNiwiZXhwIjoxNzQwMjQ5NzI2fQ.ZSfUJ47sTiWLk4c3Dhq-Y-c75T8XrvysbcU6QN9hHdc";
-const userId = "Talon_Karrde";
 const callId = "zH1rzPSgSsTi"; //uuid
+
+const authToken = localStorage.getItem("authToken");
+if (!authToken) {
+  console.error("No auth token found");
+}
+const userPayload = authToken ? jwtDecode(authToken) : "";
+
+const token = await fetch("http://localhost:3000/api/v1/token/getstreamtoken", {
+  method: "POST",
+  Headers: {
+    "Content-Type": "application/json",
+    authorization: `Bearer ${authToken}`,
+  },
+});
+
+const userId = userPayload.userId;
 
 // Set up the user object
 const user = {
   id: userId,
-  name: "Oliver",
+  name: "RASA",
   image: "https://getstream.io/random_svg/?id=oliver&name=Oliver",
 };
 
