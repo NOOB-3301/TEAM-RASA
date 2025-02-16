@@ -7,11 +7,11 @@ import {
 } from "@stream-io/video-react-sdk";
 
 import { StreamTheme, ParticipantView } from "@stream-io/video-react-sdk";
-
+import axios from "axios";
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 import { jwtDecode } from "jwt-decode";
 
-const apiKey = "mmhfdzb5evj2";
+const apiKey = "u4vswk85dwen";
 const callId = "zH1rzPSgSsTi"; //uuid
 
 const authToken = localStorage.getItem("authToken");
@@ -20,14 +20,22 @@ if (!authToken) {
 }
 const userPayload = authToken ? jwtDecode(authToken) : "";
 
-const token = await fetch("http://localhost:3000/api/v1/token/getstreamtoken", {
-  method: "POST",
-  Headers: {
+// const token = await ("http://localhost:3000/api/v1/token/getstreamtoken", {
+//   method: "POST",
+//   Headers: {
+//     "Content-Type": "application/json",
+//     authorization: `Bearer ${authToken}`,
+//   },
+// });
+let generated;
+const token = await axios.post("http://localhost:3000/api/v1/token/getstreamtoken", {}, {
+  headers: {
     "Content-Type": "application/json",
-    authorization: `Bearer ${authToken}`,
+    authorization: `Bearer ${userPayload.userId}`,
   },
-});
+})
 
+console.log(token.data.generatedToken);
 const userId = userPayload.userId;
 
 // Set up the user object
@@ -37,7 +45,7 @@ const user = {
   image: "https://getstream.io/random_svg/?id=oliver&name=Oliver",
 };
 
-const client = new StreamVideoClient({ apiKey, user, token });
+const client = new StreamVideoClient({ apiKey, user, token: token.data.generatedToken });
 const call = client.call("default", callId);
 call.join({ create: true });
 
