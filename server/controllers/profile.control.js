@@ -33,7 +33,7 @@ const getProfile = async (req, res) => {
         const user = await User.findById(userId);
         await user.populate({
             path:"roleId",
-            populate:{path: "publishedCourses"}
+            populate:{path: "publishedCourses", strictPopulate:false}
         })
 
         return res.status(200).send({meassage:"profile fetched successfully", fetchedUser:user})

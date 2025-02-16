@@ -3,8 +3,9 @@ import { User } from '../model/user.model.js';
 import Course from '../model/course.model.js';
 import { Teacher } from '../model/teacher.model.js';
 import { upload_on_cloudinary } from '../utils/cloudinary.utils.js';
+import { Student } from '../model/student.model.js';
 
-const secretkey= process.env.SECRET_KEY
+const secretkey = process.env.SECRET_KEY
 if (!secretkey) {
     console.log("Secret key not found")
     process.exit()
@@ -16,7 +17,7 @@ const createCourse = async (req, res) => {
         const authHeader = req.headers.authorization;
         if (!authHeader) {
             return res.status(401).json({ error: "No token provided." });
-        }const secretkey= process.env.SECRET_KEY
+        } const secretkey = process.env.SECRET_KEY
         if (!secretkey) {
             console.log("Secret key not found")
             process.exit()
@@ -40,7 +41,7 @@ const createCourse = async (req, res) => {
         console.log(userId)
         const user = await User.findById(userId);
         await user.populate('roleId')
-        console.log("after populate",user)
+        console.log("after populate", user)
         if (!user) {
             return res.status(404).json({ error: "User not found." });
         }
@@ -59,7 +60,7 @@ const createCourse = async (req, res) => {
         }
 
         if (!filebuffer) {
-            return res.status(400).send({message:"image file is missing"})
+            return res.status(400).send({ message: "image file is missing" })
         }
 
         const uploaded_url = await upload_on_cloudinary(filebuffer)
@@ -72,7 +73,7 @@ const createCourse = async (req, res) => {
             price,
             imageLink: uploaded_url,
             user: user._id,
-            teacher:user.roleId._id // Link to the teacher
+            teacher: user.roleId._id // Link to the teacher
         });
         // console.log(user)
 
@@ -160,5 +161,101 @@ const getCourseByTeacher = async (req, res) => {
 };
 
 
+const enrollCourse = async (req, res) => {
+    try {
+        const { c_id } = req.body;
+        if (!c_id) {
+            return res.status(400).json({ error: "Course ID is required." });
+        }
 
-export { createCourse, getAllCourses,getCourseDetails, getCourseByTeacher };
+        // Validate Authorization Header
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({ error: "Invalid or missing token." });
+        }
+
+        const token = authHeader.split(" ")[1];
+
+        // Verify Token
+        // const secretKey = process.env.SECRET_KEY;
+        // if (!secretKey) {
+        //     console.error("Secret key not found");
+        //     return res.status(500).json({ error: "Internal server error." });
+        // }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, secretkey);
+        } catch (err) {
+            return res.status(401).json({ error: "Invalid or expired token." });
+        }
+
+        // Fetch Student
+        const fetchedStudent = await Student.findById(decoded.roleId);
+        if (!fetchedStudent) {
+            return res.status(404).json({ error: "Student not found." });
+        }
+
+        // Check if student is already enrolled
+        if (fetchedStudent.purchasedCourse.includes(c_id)) {
+            return res.status(400).json({ error: "You are already enrolled in this course." });
+        }
+
+        // Enroll Student
+        fetchedStudent.purchasedCourse.push(c_id);
+        await fetchedStudent.save();
+
+        return res.status(200).json({ message: "Successfully enrolled in course." });
+    } catch (error) {
+        console.error("Error while enrolling course:", error);
+        return res.status(500).json({ error: "An error occurred while enrolling in the course." });
+    }
+};
+
+
+const getEnrollCourse = async (req, res) => {
+    try {
+        // Validate Authorization Header
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({ error: "Invalid or missing token." });
+        }
+
+        const token = authHeader.split(" ")[1];
+
+        // Verify Token
+        const secretKey = process.env.SECRET_KEY;
+        if (!secretKey) {
+            console.error("Secret key not found");
+            return res.status(500).json({ error: "Internal server error." });
+        }
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, secretKey);
+        } catch (err) {
+            return res.status(401).json({ error: "Invalid or expired token." });
+        }
+
+        // Fetch Student and populate purchased courses
+        const fetchedStudent = await Student.findById(decoded.roleId).populate("purchasedCourse");
+
+        if (!fetchedStudent) {
+            return res.status(404).json({ error: "Student not found." });
+        }
+
+        return res.status(200).json({
+            message: "Courses fetched successfully",
+            fetchedCourses: fetchedStudent.purchasedCourse,
+        });
+    } catch (error) {
+        console.error("Error fetching enrolled courses:", error);
+        return res.status(500).json({ error: "An error occurred while fetching courses." });
+    }
+};
+
+
+
+
+
+export { createCourse, getAllCourses, getCourseDetails, getCourseByTeacher, enrollCourse, getEnrollCourse };

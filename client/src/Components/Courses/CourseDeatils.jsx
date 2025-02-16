@@ -8,6 +8,9 @@ export default function CourseDetails() {
     const [course, setCourse] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [enrolling, setEnrolling] = useState(false);
+    const [enrollError, setEnrollError] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     useEffect(() => {
         const fetchCourseDetails = async () => {
@@ -21,7 +24,6 @@ export default function CourseDetails() {
                 const data = await response.json();
 
                 if (response.ok) {
-                    console.log(data)
                     setCourse(data.fetchedCourse);
                 } else {
                     setError(data.message || "Failed to fetch course details.");
@@ -35,6 +37,41 @@ export default function CourseDetails() {
 
         fetchCourseDetails();
     }, [id]);
+
+    const handleEnroll = async () => {
+        setEnrolling(true);
+        setEnrollError("");
+        setSuccessMessage("");
+
+        try {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                setEnrollError("Authentication required. Please log in.");
+                return;
+            }
+
+            const response = await fetch("http://localhost:3000/api/v1/course/enrollcourse", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ c_id: id }),
+            });
+
+            const data = await response.json();
+            console.log(data)
+            if (response.ok) {
+                setSuccessMessage("Successfully enrolled in the course!");
+            } else {
+                setEnrollError(data.message || "Failed to enroll.");
+            }
+        } catch (error) {
+            setEnrollError("Network error. Please try again.");
+        } finally {
+            setEnrolling(false);
+        }
+    };
 
     if (loading) return <div className="text-center mt-10 text-lg font-semibold text-green-700">Loading course details...</div>;
     if (error) return <div className="text-center mt-10 text-red-600">{error}</div>;
@@ -93,6 +130,21 @@ export default function CourseDetails() {
                         <p className="text-lg"><strong>👨‍🏫 Teacher:</strong> {course.user?.username || "Unknown"}</p>
                         <p className="text-lg"><strong>🕒 Lecture Timing:</strong> {course.lectureTiming}</p>
                     </motion.div>
+
+                    {/* Enroll Button */}
+                    <motion.button
+                        onClick={handleEnroll}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="mt-6 px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-200"
+                        disabled={enrolling}
+                    >
+                        {enrolling ? "Enrolling..." : "Enroll Now"}
+                    </motion.button>
+
+                    {/* Success/Error Message */}
+                    {successMessage && <p className="mt-4 text-green-600">{successMessage}</p>}
+                    {enrollError && <p className="mt-4 text-red-600">{enrollError}</p>}
                 </motion.div>
             </div>
         </>
