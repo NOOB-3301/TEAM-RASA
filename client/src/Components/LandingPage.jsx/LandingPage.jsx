@@ -51,7 +51,6 @@ export default function LandingPage() {
 
   return (
     <div className="overflow-x-hidden bg-gradient-to-b from-[#f0f4ff] to-white">
-      {/* Hero Section with Stats */}
       <section className="relative min-h-screen">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
@@ -112,7 +111,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Floating Achievement Cards */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex gap-6">
           {[
             { icon: <FaStar />, text: "Top Rated Platform" },

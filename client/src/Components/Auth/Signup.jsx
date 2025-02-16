@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -29,7 +30,12 @@ export default function Signup() {
     const data = await response.json();
     if (response.ok) {
       localStorage.setItem("authToken", data.token);
-      window.location.href = "/home";
+      const userPayload = jwtDecode(data.token);
+      if (userPayload.role === "teacher") {
+        window.location.href = "/teacher";
+      } else {
+        window.location.href = "/student";
+      }
     } else {
       console.error("Signup failed:", data.message);
     }
