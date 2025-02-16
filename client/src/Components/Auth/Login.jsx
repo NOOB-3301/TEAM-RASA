@@ -1,18 +1,11 @@
-// Login.jsx
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-export default function Login() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,10 +59,12 @@ export default function Login() {
           <button
             type="submit"
             className="w-full p-3 rounded bg-black hover:bg-gray-800 text-white font-bold"
+
           >
             Login
           </button>
         </form>
+
         <p className="mt-4 text-center">
           Don't have an account?
           <Link

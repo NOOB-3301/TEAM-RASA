@@ -1,4 +1,3 @@
-// Signup.jsx
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -42,14 +41,14 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white text-black">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#f0f4ff] to-white">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="p-8 rounded-lg shadow-lg w-96 bg-white border border-black"
+        className="p-8 rounded-3xl shadow-2xl max-w-md w-full bg-white border border-gray-300"
       >
-        <h2 className="text-3xl font-bold text-center">Sign Up</h2>
+        <h2 className="text-3xl font-bold text-center text-gray-900">Sign Up</h2>
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -57,7 +56,7 @@ export default function Signup() {
             placeholder="Username"
             value={formData.username}
             onChange={handleChange}
-            className="w-full p-3 rounded border border-black text-black placeholder-gray-600"
+            className="w-full p-3 rounded-xl border border-gray-300 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
           />
           <input
             type="email"
@@ -65,7 +64,7 @@ export default function Signup() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-3 rounded border border-black text-black placeholder-gray-600"
+            className="w-full p-3 rounded-xl border border-gray-300 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
           />
           <input
             type="password"
@@ -73,12 +72,13 @@ export default function Signup() {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-3 rounded border border-black text-black placeholder-gray-600"
+            className="w-full p-3 rounded-xl border border-gray-300 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
           />
 
           <div className="flex justify-around">
             <label
               className={`flex items-center justify-center w-24 h-10 border-2 ${
+
                 formData.role === "teacher" ? "border-black" : "border-gray-300"
               } rounded cursor-pointer`}
             >
@@ -108,14 +108,14 @@ export default function Signup() {
           </div>
           {formData.role === "teacher" && (
             <div className="space-y-2">
-              <label className="block text-black font-semibold">
+              <label className="block text-[#0F6B5E] font-semibold">
                 Qualification
               </label>
               <select
                 name="qualification"
                 value={formData.qualification || ""}
                 onChange={handleChange}
-                className="w-full p-3 rounded border border-black text-black"
+                className="w-full p-3 rounded-xl border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
               >
                 <option value="" disabled>
                   Select your qualification
