@@ -39,6 +39,11 @@ function Teacherhome() {
     if (userId) fetchCourses();
   }, [userId]);
 
+  const indexOfLastCourse = currentPage * coursesPerPage;
+  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+  const currentCourses = courses.slice(indexOfFirstCourse, indexOfLastCourse);
+  const totalPages = Math.ceil(courses.length / coursesPerPage);
+
   return (
     <>
       <Navbar />
