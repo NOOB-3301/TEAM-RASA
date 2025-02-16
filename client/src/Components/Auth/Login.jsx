@@ -1,68 +1,80 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic
-    console.log("Logging in with:", { email, password });
+    console.log("Login Data:", formData);
+    const response = await fetch("http://localhost:3000/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem("authToken", data.token);
+      const userPayload = jwtDecode(data.token);
+      if (userPayload.role === "teacher") {
+        window.location.href = "/teacher";
+      } else {
+        window.location.href = "/student";
+      }
+    }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#f0f4ff] to-white">
-      <div className="bg-white p-8 rounded-3xl shadow-2xl max-w-md w-full">
-        <h2 className="text-3xl font-bold text-center text-gray-900">Login</h2>
-        <p className="text-center text-gray-600 mb-6">Welcome back! Please login to your account.</p>
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-          
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-          
+    <div className="min-h-screen flex items-center justify-center bg-white text-black">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="p-8 rounded-lg shadow-lg w-96 bg-white border border-black"
+      >
+        <h2 className="text-3xl font-bold text-center">Login</h2>
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full p-3 rounded border border-black text-black placeholder-gray-600"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full p-3 rounded border border-black text-black placeholder-gray-600"
+          />
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-[#0F6B5E] text-white rounded-xl font-bold hover:bg-[#0a4e42] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="w-full p-3 rounded bg-black hover:bg-gray-800 text-white font-bold"
+
           >
             Login
           </button>
         </form>
-        
-        <div className="text-center mt-4">
-          <Link to="/forgot-password" className="text-[#0F6B5E] font-semibold hover:underline">
-            Forgot Password?
-          </Link>
-        </div>
-        
-        <div className="text-center mt-4 text-gray-600">
-          Don't have an account? 
-          <Link to="/signup" className="text-[#0F6B5E] font-semibold hover:underline ml-1">
+
+        <p className="mt-4 text-center">
+          Don't have an account?
+          <Link
+            to="/signup"
+            className="text-black font-semibold hover:underline"
+          >
             Sign up
           </Link>
-        </div>
-      </div>
+        </p>
+      </motion.div>
     </div>
   );
 }

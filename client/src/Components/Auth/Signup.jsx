@@ -78,8 +78,9 @@ export default function Signup() {
           <div className="flex justify-around">
             <label
               className={`flex items-center justify-center w-24 h-10 border-2 ${
-                formData.role === "teacher" ? "border-[#0F6B5E]" : "border-gray-300"
-              } rounded-xl cursor-pointer text-[#0F6B5E] font-semibold`}
+
+                formData.role === "teacher" ? "border-black" : "border-gray-300"
+              } rounded cursor-pointer`}
             >
               <input
                 type="radio"
@@ -92,8 +93,8 @@ export default function Signup() {
             </label>
             <label
               className={`flex items-center justify-center w-24 h-10 border-2 ${
-                formData.role === "student" ? "border-[#0F6B5E]" : "border-gray-300"
-              } rounded-xl cursor-pointer text-[#0F6B5E] font-semibold`}
+                formData.role === "student" ? "border-black" : "border-gray-300"
+              } rounded cursor-pointer`}
             >
               <input
                 type="radio"
@@ -129,16 +130,16 @@ export default function Signup() {
           )}
           <button
             type="submit"
-            className="w-full p-3 rounded-xl bg-[#0F6B5E] hover:bg-[#0a4e42] text-white font-bold transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="w-full p-3 rounded bg-black hover:bg-gray-800 text-white font-bold"
           >
             Sign Up
           </button>
         </form>
-        <p className="mt-4 text-center text-gray-600">
-          Already have an account? {" "}
+        <p className="mt-4 text-center">
+          Already have an account?{" "}
           <Link
             to="/login"
-            className="text-[#0F6B5E] font-semibold hover:underline"
+            className="text-black font-semibold hover:underline"
           >
             Login
           </Link>
