@@ -5,22 +5,21 @@ import { User } from "../model/user.model.js";
 import { Student } from "../model/student.model.js";
 import dotenv from 'dotenv'
 
-dotenv.config
+dotenv.config()
 
-
-const secretkey= process.env.SECRET_KEY
+const secretkey = process.env.SECRET_KEY;
 if (!secretkey) {
-    console.log("Secret key not found")
-    process.exit()
+    console.log("Secret key not found");
+    process.exit();
 }
 
 
 const register = async (req, res) => {
     try {
-        const { username, email, password, isTeacher, qualification } = req.body;
+        const { username, email, password, role } = req.body;
 
         // ✅ Check if all required fields are provided
-        if (!username || !email || !password) {
+        if (!username || !email || !password || !role) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
@@ -34,17 +33,17 @@ const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         let createdRole;
-        let roleType = isTeacher ? "Teacher" : "Student";
 
         // ✅ Create either a Teacher or Student
-        if (isTeacher) {
+        if (role == "Teacher") {
+            const {qualification} = req.body
             if (!qualification) {
                 return res.status(400).json({ message: "Qualification is required" });
             }
             createdRole = await Teacher.create({
                 subjects: [],
                 publishedCourses: [],
-                qualification
+                Qualification:qualification
             });
         } else {
             createdRole = await Student.create({
@@ -58,7 +57,7 @@ const register = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            role: roleType,
+            role: role,
             roleId: createdRole._id
         });
 
@@ -73,17 +72,10 @@ const register = async (req, res) => {
             { expiresIn: "7d" }
         );
 
-        console.log(`${roleType} registered successfully:`, user.email);
+        
         return res.status(201).json({
-            message: `${roleType} created successfully`,
-            token,
-            user: {
-                _id: user._id,
-                username: user.username,
-                email: user.email,
-                role: user.role
-            },
-            roleData: createdRole
+            message: `${role} created successfully`,
+            token
         });
 
     } catch (error) {
@@ -107,7 +99,7 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(401).json({ message: "No user found with this email" });
         }
-
+        console.log(user)
         // ✅ Compare password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
@@ -124,7 +116,7 @@ const login = async (req, res) => {
 
         // ✅ Generate JWT Token
         const token = jwt.sign(
-            { userId: user._id, role: user.role, roleId:roleData._id },
+            { userId: user._id , role: user.role, roleId:roleData._id },
             secretkey, // Store this in your .env file
             { expiresIn: "7d" }
         );
@@ -133,13 +125,6 @@ const login = async (req, res) => {
         return res.status(200).json({
             message: "Login successful",
             token,
-            user: {
-                _id: user._id,
-                username: user.username,
-                email: user.email,
-                role: user.role
-            },
-            roleData
         });
 
     } catch (error) {
