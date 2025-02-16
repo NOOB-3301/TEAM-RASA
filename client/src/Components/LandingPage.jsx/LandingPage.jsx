@@ -9,6 +9,9 @@ import {
   FaGraduationCap,
   FaClock,
   FaChartLine,
+  FaVideo,
+  FaPlayCircle,
+  FaUserFriends
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -230,7 +233,23 @@ export default function LandingPage() {
                 icon: <FaChartLine className="text-5xl text-[#0F6B5E]" />,
                 title: "Career Growth",
                 desc: "Advance your teaching career with professional development opportunities.",
+              },{
+                icon: <FaVideo className="text-5xl text-[#0F6B5E]" />
+                ,
+                title: "Live Class",
+                desc: "Start your learning in much better way.",
               },
+              {
+                icon: <FaPlayCircle className="text-5xl text-[#0F6B5E]" />,
+                title: "Recorded Classes",
+                desc: "If you missed your live Class dont worry we got your back.",
+              },
+              {
+                icon:<FaUserFriends className="text-5xl text-[#0F6B5E]" />,
+                title: "One-to-One",
+                desc: "Your very Own Personal tutor in One go"
+              }
+
             ].map((feature, idx) => (
               <div
                 key={idx}
@@ -302,9 +321,11 @@ export default function LandingPage() {
             Join thousands of educators who are already making a difference with
             RASA.
           </p>
+          <Link >
           <button className="px-8 py-4 bg-white text-[#0F6B5E] rounded-xl font-bold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
             Get Started Today
           </button>
+          </Link>
         </div>
       </section>
     </div>
