@@ -28,10 +28,11 @@ export default function LoginPage() {
       if (!response.ok) {
         throw new Error(data.message || "Login failed");
       }
-
+      console.log(data)
       localStorage.setItem("authToken", data.token);
       const userPayload = jwtDecode(data.token);
-
+      localStorage.setItem("u_id",userPayload.userId)
+      console.log(userPayload)
       if (userPayload.role === "Teacher") {
         window.location.href = "/teacher";
       } else {
