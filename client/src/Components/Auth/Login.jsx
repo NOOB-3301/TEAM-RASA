@@ -28,11 +28,11 @@ export default function LoginPage() {
       if (!response.ok) {
         throw new Error(data.message || "Login failed");
       }
-      console.log(data)
+      console.log(data);
       localStorage.setItem("authToken", data.token);
       const userPayload = jwtDecode(data.token);
-      localStorage.setItem("u_id",userPayload.userId)
-      console.log(userPayload)
+      localStorage.setItem("u_id", userPayload.userId);
+      console.log(userPayload);
       if (userPayload.role === "Teacher") {
         window.location.href = "/teacher";
       } else {
@@ -45,14 +45,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white text-black">
+    <div className="min-h-screen flex items-center justify-center bg-green-50 text-green-900">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="p-8 rounded-lg shadow-lg w-96 bg-white border border-black"
+        className="p-8 rounded-lg shadow-lg w-96 bg-white border border-green-700"
       >
-        <h2 className="text-3xl font-bold text-center">Login</h2>
+        <h2 className="text-3xl font-bold text-center text-green-800">Login</h2>
         {error && <p className="text-red-600 text-center">{error}</p>}
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <input
@@ -61,7 +61,7 @@ export default function LoginPage() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 rounded border border-black text-black placeholder-gray-600"
+            className="w-full p-3 rounded border border-green-700 text-green-900 placeholder-green-700"
             required
           />
           <input
@@ -70,20 +70,20 @@ export default function LoginPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 rounded border border-black text-black placeholder-gray-600"
+            className="w-full p-3 rounded border border-green-700 text-green-900 placeholder-green-700"
             required
           />
           <button
             type="submit"
-            className="w-full p-3 rounded bg-black hover:bg-gray-800 text-white font-bold"
+            className="w-full p-3 rounded bg-green-700 hover:bg-green-800 text-white font-bold"
           >
             Login
           </button>
         </form>
 
         <p className="mt-4 text-center">
-          Don't have an account?
-          <Link to="/signup" className="text-black font-semibold hover:underline">
+          Don't have an account?{" "}
+          <Link to="/signup" className="text-green-700 font-semibold hover:underline">
             Sign up
           </Link>
         </p>

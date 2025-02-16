@@ -48,7 +48,7 @@ function Teacherhome() {
     <>
       <Navbar />
 
-      <div className="flex flex-col items-center min-h-screen bg-gradient-to-b from-[#f0f4ff] to-white ">
+      <div className="flex flex-col items-center min-h-screen bg-gradient-to-b from-green-100 to-white ">
         {/* Buttons for "Create Meeting" and "Publish Course" */}
         <div className="mt-28"></div>
 
@@ -59,7 +59,7 @@ function Teacherhome() {
             onClick={() => setIsLive(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-48 p-4 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-200"
+            className="w-48 p-4 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-200"
           >
             Start Live Class
           </motion.button>
@@ -67,7 +67,7 @@ function Teacherhome() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-48 p-4 bg-gray-600 text-white font-bold rounded-lg shadow-md hover:bg-gray-700 transition duration-200"
+            className="w-48 p-4 bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-200"
           >
             Publish Course
           </motion.button>
@@ -79,7 +79,7 @@ function Teacherhome() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md"
         >
-          <h2 className="text-xl font-bold mb-4">Published Courses</h2>
+          <h2 className="text-xl font-bold mb-4 text-green-700">Published Courses</h2>
           {currentCourses.length > 0 ? (
             <motion.div
               initial={{ opacity: 0 }}
@@ -115,7 +115,7 @@ function Teacherhome() {
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
                 className={`px-4 py-2 rounded-lg text-white font-bold ${
-                  currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+                  currentPage === 1 ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
                 } transition duration-200`}
               >
                 Previous
@@ -129,7 +129,7 @@ function Teacherhome() {
                 onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
                 className={`px-4 py-2 rounded-lg text-white font-bold ${
-                  currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+                  currentPage === totalPages ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
                 } transition duration-200`}
               >
                 Next

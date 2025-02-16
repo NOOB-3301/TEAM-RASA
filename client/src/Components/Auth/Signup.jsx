@@ -41,14 +41,14 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#f0f4ff] to-white">
+    <div className="min-h-screen flex items-center justify-center bg-green-50 text-green-900">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="p-8 rounded-3xl shadow-2xl max-w-md w-full bg-white border border-gray-300"
+        className="p-8 rounded-3xl shadow-2xl max-w-md w-full bg-white border border-green-700"
       >
-        <h2 className="text-3xl font-bold text-center text-gray-900">Sign Up</h2>
+        <h2 className="text-3xl font-bold text-center text-green-800">Sign Up</h2>
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -56,7 +56,7 @@ export default function Signup() {
             placeholder="Username"
             value={formData.username}
             onChange={handleChange}
-            className="w-full p-3 rounded-xl border border-gray-300 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
+            className="w-full p-3 rounded-xl border border-green-700 text-green-900 placeholder-green-700 focus:outline-none focus:ring-2 focus:ring-green-600"
           />
           <input
             type="email"
@@ -64,7 +64,7 @@ export default function Signup() {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-3 rounded-xl border border-gray-300 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
+            className="w-full p-3 rounded-xl border border-green-700 text-green-900 placeholder-green-700 focus:outline-none focus:ring-2 focus:ring-green-600"
           />
           <input
             type="password"
@@ -72,14 +72,13 @@ export default function Signup() {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-3 rounded-xl border border-gray-300 text-black placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
+            className="w-full p-3 rounded-xl border border-green-700 text-green-900 placeholder-green-700 focus:outline-none focus:ring-2 focus:ring-green-600"
           />
 
           <div className="flex justify-around">
             <label
               className={`flex items-center justify-center w-24 h-10 border-2 ${
-
-                formData.role === "Teacher" ? "border-black" : "border-gray-300"
+                formData.role === "Teacher" ? "border-green-700" : "border-green-400"
               } rounded cursor-pointer`}
             >
               <input
@@ -93,7 +92,7 @@ export default function Signup() {
             </label>
             <label
               className={`flex items-center justify-center w-24 h-10 border-2 ${
-                formData.role === "Student" ? "border-black" : "border-gray-300"
+                formData.role === "Student" ? "border-green-700" : "border-green-400"
               } rounded cursor-pointer`}
             >
               <input
@@ -108,14 +107,12 @@ export default function Signup() {
           </div>
           {formData.role === "Teacher" && (
             <div className="space-y-2">
-              <label className="block text-[#0F6B5E] font-semibold">
-                Qualification
-              </label>
+              <label className="block text-green-700 font-semibold">Qualification</label>
               <select
                 name="qualification"
                 value={formData.qualification || ""}
                 onChange={handleChange}
-                className="w-full p-3 rounded-xl border border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-[#0F6B5E]"
+                className="w-full p-3 rounded-xl border border-green-700 text-green-900 focus:outline-none focus:ring-2 focus:ring-green-600"
               >
                 <option value="" disabled>
                   Select your qualification
@@ -130,7 +127,7 @@ export default function Signup() {
           )}
           <button
             type="submit"
-            className="w-full p-3 rounded bg-black hover:bg-gray-800 text-white font-bold"
+            className="w-full p-3 rounded bg-green-700 hover:bg-green-800 text-white font-bold"
           >
             Sign Up
           </button>
@@ -139,7 +136,7 @@ export default function Signup() {
           Already have an account?{" "}
           <Link
             to="/login"
-            className="text-black font-semibold hover:underline"
+            className="text-green-700 font-semibold hover:underline"
           >
             Login
           </Link>

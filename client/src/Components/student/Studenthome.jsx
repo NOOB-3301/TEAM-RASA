@@ -70,22 +70,22 @@ function Studenthome() {
   return (
     <>
       <Navbar />
-      <div className="relative min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center p-6">
+      <div className="relative min-h-screen bg-green-50 text-green-900 flex flex-col items-center p-6">
         {/* Welcome Message */}
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-extrabold mt-16 text-gray-800"
+          className="text-4xl font-extrabold mt-16 text-green-800"
         >
-          Welcome, {studentName}! 👋
+          Welcome, {studentName}!
         </motion.h1>
 
         {/* Join a Class Button */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="mt-4 px-6 py-3 bg-gray-800 text-white font-bold rounded-lg shadow-md hover:bg-gray-700 transition duration-300"
+          className="mt-4 px-6 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-300"
         >
           Join a Class
         </motion.button>
@@ -96,9 +96,9 @@ function Studenthome() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-white p-6 rounded-2xl shadow-md border border-gray-300"
+            className="bg-white p-6 rounded-2xl shadow-md border border-green-300"
           >
-            <h2 className="text-xl font-bold mb-4 text-gray-700">Enrolled Courses</h2>
+            <h2 className="text-xl font-bold mb-4 text-green-700">Enrolled Courses</h2>
             {enrolledCourses.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {enrolledCourses.map((course) => (
@@ -113,7 +113,7 @@ function Studenthome() {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center">No enrolled courses yet.</p>
+              <p className="text-green-500 text-center">No enrolled courses yet.</p>
             )}
           </motion.div>
 
@@ -122,10 +122,10 @@ function Studenthome() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-white p-6 rounded-2xl shadow-md mt-6 border border-gray-300"
+            className="bg-white p-6 rounded-2xl shadow-md mt-6 border border-green-300"
           >
-            <h2 className="text-xl font-bold mb-4 text-gray-700">Explore Courses</h2>
-            <p className="text-gray-600 mb-4">Discover new courses and expand your knowledge!</p>
+            <h2 className="text-xl font-bold mb-4 text-green-700">Explore Courses</h2>
+            <p className="text-green-600 mb-4">Discover new courses and expand your knowledge!</p>
 
             {courses.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -141,14 +141,14 @@ function Studenthome() {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center">No courses available.</p>
+              <p className="text-green-500 text-center">No courses available.</p>
             )}
 
             {/* Browse More Button */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-gray-800 text-white font-bold rounded-lg shadow-md hover:bg-gray-700 transition duration-300"
+              className="mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-300"
               onClick={() => window.location.href = "/courses"}
             >
               Browse More <FiArrowRight className="text-lg" />
