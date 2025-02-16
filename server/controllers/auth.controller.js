@@ -108,11 +108,14 @@ const login = async (req, res) => {
 
         // ✅ Retrieve role details (Student or Teacher)
         let roleData;
-        if (user.role === "teacher") {
+        if (user.role === "Teacher") {
             roleData = await Teacher.findById(user.roleId);
         } else {
             roleData = await Student.findById(user.roleId);
         }
+
+        console.log("roledata", roleData)
+        console.log("userdata", user)
 
         // ✅ Generate JWT Token
         const token = jwt.sign(

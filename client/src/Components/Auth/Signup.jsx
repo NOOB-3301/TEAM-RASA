@@ -30,7 +30,7 @@ export default function Signup() {
     if (response.ok) {
       localStorage.setItem("authToken", data.token);
       const userPayload = jwtDecode(data.token);
-      if (userPayload.role === "teacher") {
+      if (userPayload.role === "Teacher") {
         window.location.href = "/teacher";
       } else {
         window.location.href = "/student";
@@ -79,13 +79,13 @@ export default function Signup() {
             <label
               className={`flex items-center justify-center w-24 h-10 border-2 ${
 
-                formData.role === "teacher" ? "border-black" : "border-gray-300"
+                formData.role === "Teacher" ? "border-black" : "border-gray-300"
               } rounded cursor-pointer`}
             >
               <input
                 type="radio"
                 name="role"
-                value="teacher"
+                value="Teacher"
                 onChange={handleChange}
                 className="hidden"
               />
@@ -93,20 +93,20 @@ export default function Signup() {
             </label>
             <label
               className={`flex items-center justify-center w-24 h-10 border-2 ${
-                formData.role === "student" ? "border-black" : "border-gray-300"
+                formData.role === "Student" ? "border-black" : "border-gray-300"
               } rounded cursor-pointer`}
             >
               <input
                 type="radio"
                 name="role"
-                value="student"
+                value="Student"
                 onChange={handleChange}
                 className="hidden"
               />
               Student
             </label>
           </div>
-          {formData.role === "teacher" && (
+          {formData.role === "Teacher" && (
             <div className="space-y-2">
               <label className="block text-[#0F6B5E] font-semibold">
                 Qualification

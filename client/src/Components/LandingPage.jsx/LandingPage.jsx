@@ -249,7 +249,7 @@ export default function LandingPage() {
                 title: "One-to-One",
                 desc: "Your very Own Personal tutor in One go"
               }
-              },
+              
             ].map((feature, idx) => (
               <div
                 key={idx}
