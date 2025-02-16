@@ -28,7 +28,7 @@ export default function Signup() {
 
     const data = await response.json();
     if (response.ok) {
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("authToken", data.token);
       window.location.href = "/home";
     } else {
       console.error("Signup failed:", data.message);

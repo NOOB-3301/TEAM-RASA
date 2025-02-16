@@ -73,13 +73,16 @@ export default function LandingPage() {
               </p>
 
               <div className="flex gap-6">
-
-                <button onClick={()=>{window.location.href="/signup"}} className="px-8 py-4 bg-[#0F6B5E] text-white rounded-xl font-bold hover:bg-[#0a4e42] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-                  Get Started
-                </button>
-                <button onClick={()=> {window.location.href="/courses"}} className="px-8 py-4 border-2 border-[#0F6B5E] text-[#0F6B5E] rounded-xl font-bold hover:bg-[#0F6B5E] hover:text-white transform hover:scale-105 transition-all duration-300">
-                  Explore Courses
-                </button>
+                <Link to="/signup">
+                  <button className="px-8 py-4 bg-[#0F6B5E] text-white rounded-xl font-bold hover:bg-[#0a4e42] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                    Get Started
+                  </button>
+                </Link>
+                <Link to="/courses">
+                  <button className="px-8 py-4 border-2 border-[#0F6B5E] text-[#0F6B5E] rounded-xl font-bold hover:bg-[#0F6B5E] hover:text-white transform hover:scale-105 transition-all duration-300">
+                    Explore Courses
+                  </button>
+                </Link>
               </div>
             </div>
 
