@@ -182,9 +182,14 @@ export default function LandingPage() {
                 key={idx}
                 className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
               >
-                <div className="h-48 bg-gradient-to-r from-[#0F6B5E] to-[#14887a] relative overflow-hidden">
-                  <div className="absolute inset-0 bg-grid-pattern opacity-20"></div>
-                </div>
+                <div className="h-48 bg-gradient-to-r from-[#5a5d85] to-[#14887a] relative overflow-hidden">
+                <div className="h-48 relative overflow-hidden">
+                  <img
+                    src={course.imageLink}
+                    alt={course.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>                </div>
                 <div className="p-6">
                   <div className="text-sm text-[#0F6B5E] font-semibold mb-2">
                     {course.category}
