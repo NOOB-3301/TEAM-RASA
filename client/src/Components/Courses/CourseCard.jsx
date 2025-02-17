@@ -1,10 +1,9 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 export default function CourseCard({ course }) {
-  const [Isuser, setIsUser] = useState(true);
+  const [IsUser, setIsUser] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -18,25 +17,14 @@ export default function CourseCard({ course }) {
 
   console.log("Image Link:", course.imageLink);
 
-  const imageUrl = course.imageLink?.startsWith("http")
-    ? course.imageLink
-    : "https://via.placeholder.com/300"; // Fallback image
+  const imageUrl = course.imageLink
+  // Fallback image
 
   return (
-    <motion.div
-      whileHover={{
-        scale: 1.05,
-        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-      }}
-      whileTap={{ scale: 0.98 }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="max-w-md p-6 bg-gradient-to-br from-white via-gray-100 to-gray-200 rounded-xl shadow-lg border border-gray-300 relative overflow-hidden group transform transition-all"
-    >
+    <div className="max-w-md p-6 bg-gradient-to-br from-white via-gray-100 to-gray-200 rounded-xl shadow-lg border border-gray-300 relative overflow-hidden group transform transition-all">
       {/* Course Image */}
       <div className="relative overflow-hidden rounded-lg">
-        <motion.img
+        <img
           src={imageUrl}
           alt={course.title}
           className="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
@@ -46,7 +34,7 @@ export default function CourseCard({ course }) {
           }}
         />
         {/* Image Overlay Effect */}
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300"></div>
+        <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300"></div>
       </div>
 
       {/* Course Title */}
@@ -68,27 +56,19 @@ export default function CourseCard({ course }) {
       </div>
 
       {/* Buttons */}
-      {Isuser ? (
+      {IsUser ? (
         <Link to={`/courses/details/${course._id}`}>
-          <motion.button
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-6 w-full py-3 text-white font-semibold bg-[#0F6B5E] rounded-lg shadow-md hover:bg-[#0a4e42] transition-all transform hover:-translate-y-1"
-          >
+          <button className="mt-6 w-full py-3 text-white font-semibold bg-[#0F6B5E] rounded-lg shadow-md hover:bg-[#0a4e42] transition-all transform hover:-translate-y-1">
             Enroll Course
-          </motion.button>
+          </button>
         </Link>
       ) : (
         <Link to={`/courses/view/${course._id}`}>
-          <motion.button
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-6 w-full py-3 text-white font-semibold bg-[#0F6B5E] rounded-lg shadow-md hover:bg-[#0a4e42] transition-all transform hover:-translate-y-1"
-          >
+          <button className="mt-6 w-full py-3 text-white font-semibold bg-[#0F6B5E] rounded-lg shadow-md hover:bg-[#0a4e42] transition-all transform hover:-translate-y-1">
             View Course
-          </motion.button>
+          </button>
         </Link>
       )}
-    </motion.div>
+    </div>
   );
 }

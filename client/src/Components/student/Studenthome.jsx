@@ -43,6 +43,7 @@ function Studenthome() {
         );
         const data = await response.json();
         if (response.ok) {
+          console.log(data.fetchedCourses);
           setCourses(data.fetchedCourses || []);
         } else {
           console.error("Error fetching courses:", data.message);
