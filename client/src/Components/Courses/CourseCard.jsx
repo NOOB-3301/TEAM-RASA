@@ -6,7 +6,8 @@ export default function CourseCard({ course }) {
   const [IsUser, setIsUser] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
+    console.log(jwtDecode(token));
     if (token) {
       const userPayload = jwtDecode(token);
       if (userPayload.role === "Teacher") {
