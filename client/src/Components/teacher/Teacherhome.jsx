@@ -7,9 +7,12 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const userId = localStorage.getItem("u_id");
-console.log(jwtDecode(localStorage.getItem("authToken")));
-localStorage.setItem("u_id", jwtDecode(localStorage.getItem("authToken")).userId);
+// console.log(jwtDecode(localStorage.getItem("authToken")));
+
+if (localStorage.getItem("authToken")) {
+  
+  localStorage.setItem("u_id", jwtDecode(localStorage.getItem("authToken")).userId);
+}
 
 
 function Teacherhome() {
