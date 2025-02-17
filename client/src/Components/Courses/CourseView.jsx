@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-
+import { jwtDecode } from "jwt-decode";
 const CourseView = () => {
   const [videoUrl, setVideoUrl] = useState("");
   const [videoList, setVideoList] = useState([]);
+  const [isStudent, setIsStudent] = useState(true);
+
+
 
   const { id: courseId } = useParams();
+  console.log("course id", courseId);
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      const userpayload = jwtDecode(token);
+      console.log(userpayload)
+      if (userpayload.role === "Teacher") {
+        setIsStudent(false);
+      }
+    }
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -43,14 +57,13 @@ const CourseView = () => {
 
         {/* Buttons Section */}
         <div className="flex space-x-4">
+
           <Link to={`/courses/${courseId}/create-meeting`}>
             <button className="px-6 py-3 bg-[#0F6B5E] text-white font-semibold rounded-lg shadow-md hover:bg-[#14887a] transition">
               Create Meeting
             </button>
           </Link>
-          <button className="px-6 py-3 bg-[#14887a] text-white font-semibold rounded-lg shadow-md hover:bg-[#0F6B5E] transition">
-            Add Video
-          </button>
+
         </div>
       </div>
     </div>

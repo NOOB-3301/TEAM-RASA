@@ -14,11 +14,13 @@ import { useEffect, useState } from "react";
 // Use environment variables for sensitive data
 const apiKey = "u4vswk85dwen";
 
-const callId = "zH1rzPSgSsTi"; //uuid
+const callId = crypto.randomUUID(); //uuid
 
 export default function App() {
-  const [client, setClient] = useState<StreamVideoClient | null>(null);
-  const [call, setCall] = useState<StreamCall | null>(null);
+  // const [client, setClient] = useState<StreamVideoClient | null>(null);
+  // const [call, setCall] = useState<StreamCall | null>(null);
+  const [client, setClient] = useState(null);
+  const [call, setCall] = useState(null);
 
   useEffect(() => {
     const fetchToken = async () => {

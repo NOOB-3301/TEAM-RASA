@@ -10,6 +10,7 @@ import Teacherhome from "./Components/teacher/Teacherhome";
 import Studenthome from "./Components/student/Studenthome";
 import CourseView from "./Components/Courses/CourseView";
 import LiveClass from "./Components/StreamVideo/LiveClass";
+import StudentLiveClass from "./Components/student/StudentLiveClass";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/courses/details/:id" element={<CourseDetails />} />
         <Route path="/courses/view/:id" element={<CourseView />} />
         <Route path="/courses/:id/create-meeting" element={<LiveClass />} />
+        <Route path="/courses/:id/join-meeting" element={<StudentLiveClass />} />
 
         {/* can be accessed by uauthenticate user */}
         <Route element={<PublicRoute />}>
