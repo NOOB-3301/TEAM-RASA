@@ -20,16 +20,29 @@ if (!authToken) {
 }
 const userPayload = authToken ? jwtDecode(authToken) : "";
 
-const token = await axios.post(
-  "http://localhost:3000/api/v1/token/getstreamtoken",
-  {},
-  {
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${userPayload.userId}`,
-    },
+const fetchToken = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/token/getstreamtoken",
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${userPayload.userId}`,
+        },
+      }
+    );
+    return response.data.generatedToken;
+  } catch (error) {
+    console.error("Error fetching token:", error);
+    return null;
   }
-);
+};
+
+const token = await fetchToken();
+if (!token) {
+  throw new Error("Failed to fetch token");
+}
 
 console.log(token.data.generatedToken);
 const userId = userPayload.userId;
