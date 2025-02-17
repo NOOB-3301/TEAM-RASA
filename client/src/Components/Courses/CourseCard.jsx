@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { useState } from "react";
 
 export default function CourseCard({ course }) {
   const [Isuser, setIsUser] = useState(true);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -15,6 +15,12 @@ export default function CourseCard({ course }) {
       }
     }
   }, []);
+
+  console.log("Image Link:", course.imageLink);
+
+  const imageUrl = course.imageLink?.startsWith("http")
+    ? course.imageLink
+    : "https://via.placeholder.com/300"; // Fallback image
 
   return (
     <motion.div
@@ -30,13 +36,15 @@ export default function CourseCard({ course }) {
     >
       {/* Course Image */}
       <div className="relative overflow-hidden rounded-lg">
-        {course.imageLink && (
-          <motion.img
-            src={course.imageLink}
-            alt={course.title}
-            className="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
-          />
-        )}
+        <motion.img
+          src={imageUrl}
+          alt={course.title}
+          className="w-full h-48 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://via.placeholder.com/300";
+          }}
+        />
         {/* Image Overlay Effect */}
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300"></div>
       </div>
@@ -59,15 +67,7 @@ export default function CourseCard({ course }) {
         <p className="text-gray-600">Lecture Timing: {course.lectureTiming}</p>
       </div>
 
-      {/* Button */}
-      {/* <Link to={`/courses/view/${course._id}`}>
-        <motion.button
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-          className="mt-6 w-full py-3 text-white font-semibold bg-[#0F6B5E] rounded-lg shadow-md hover:bg-[#0a4e42] transition-all transform hover:-translate-y-1"
-        >
-          View Course
-        </motion.button> */}
+      {/* Buttons */}
       {Isuser ? (
         <Link to={`/courses/details/${course._id}`}>
           <motion.button

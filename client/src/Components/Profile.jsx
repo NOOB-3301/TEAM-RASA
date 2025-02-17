@@ -114,35 +114,25 @@ const TeacherProfile = () => {
       <h1 style={styles.heading}>User Profile</h1>
 
       <div style={styles.profileBox}>
-        <h2 style={styles.subHeading}>👤 {userData.user.name}</h2>
+        <h2 style={styles.subHeading}>👤 {userData.username}</h2>
         <p style={styles.paragraph}>
-          <strong>Email:</strong> {userData.user.email}
+          <strong>Email:</strong> {userData.email}
         </p>
         <p style={styles.paragraph}>
-          <strong>Qualification:</strong> {userData.Qualification}
+          <strong>Qualification:</strong> {userData.roleId.Qualification}
         </p>
       </div>
 
       <div style={styles.section}>
         <h2 style={styles.subHeading}>📚 Subjects</h2>
-        <ul style={styles.list}>
-          {userData.subjects.length > 0 ? (
-            userData.subjects.map((subject) => (
-              <li key={subject._id} style={styles.listItem}>
-                {subject.name}
-              </li>
-            ))
-          ) : (
-            <p style={styles.emptyText}>No subjects available</p>
-          )}
-        </ul>
+        <p>Subject: {userData.roleId.subjects}</p>
       </div>
 
       <div style={styles.section}>
         <h2 style={styles.subHeading}>🎓 Published Courses</h2>
         <ul style={styles.list}>
-          {userData.publishedCourses.length > 0 ? (
-            userData.publishedCourses.map((course) => (
+          {userData.roleId.publishedCourses.length > 0 ? (
+            userData.roleId.publishedCourses.map((course) => (
               <li key={course._id} style={styles.listItem}>
                 {course.title}
               </li>

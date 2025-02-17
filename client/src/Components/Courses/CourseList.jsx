@@ -18,8 +18,9 @@ export default function CourseList() {
           "http://localhost:3000/api/v1/course/getallcourse"
         );
         const data = await response.json();
-
+        console.log(data)
         if (response.ok) {
+          console.log(data.fetchedCourses);
           setCourses(data.fetchedCourses || []);
         } else {
           console.error("Error fetching courses:", data.message);

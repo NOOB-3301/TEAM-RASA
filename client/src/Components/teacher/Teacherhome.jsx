@@ -22,7 +22,8 @@ function Teacherhome() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const token = localStorage.getItem("auth_token");
+        const token = localStorage.getItem("authToken");
+        console.log(token);
         const response = await fetch(
           "http://localhost:3000/api/v1/course/getcoursebyeacher",
           {
@@ -34,12 +35,11 @@ function Teacherhome() {
             body: JSON.stringify({ u_id: userId }),
           }
         );
-
+        console.log(response);
         const data = await response.json();
+        console.log(data);
         if (response.ok) {
-          for (let index = 0; index < data.fetchedCourses.length; index++) {
-            delete data.fetchedCourses[index].teacher;
-          }
+          console.log(data.fetchedCourses);
           setCourses(data.fetchedCourses);
         } else {
           console.error("Failed to fetch courses:", data.message);

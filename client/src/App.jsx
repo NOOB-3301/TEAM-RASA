@@ -12,7 +12,8 @@ import CourseView from "./Components/Courses/CourseView";
 import LiveClass from "./Components/StreamVideo/LiveClass";
 import StudentLiveClass from "./Components/StreamVideo/StudentLiveClass";
 import AboutUs from "./Components/about";
-import Profile from "./Components/profile";
+// import Profile from "./Components/profile";
+import Profile from "./Components/Profile";
 
 function App() {
   return (
