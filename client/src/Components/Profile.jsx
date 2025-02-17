@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import CourseCard from "./Courses/CourseCard";
 
@@ -7,6 +8,7 @@ const TeacherProfile = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [couses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -68,6 +70,11 @@ const TeacherProfile = () => {
     fetchUserData();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
+
   if (loading) {
     return <div style={styles.loading}>Loading Profile...</div>;
   }
@@ -81,7 +88,7 @@ const TeacherProfile = () => {
       <div style={styles.container}>
         <Navbar />
         <h1 style={styles.heading}>User Profile</h1>
-
+        <button onClick={handleLogout} style={styles.logoutButton}>Logout</button>
         <div style={styles.profileBox}>
           <h2 style={styles.subHeading}>👤 {userData.name}</h2>
           <p style={styles.paragraph}>
@@ -100,7 +107,7 @@ const TeacherProfile = () => {
     <div style={styles.container}>
       <Navbar />
       <h1 style={styles.heading}>User Profile</h1>
-
+      <button onClick={handleLogout} style={styles.logoutButton}>Logout</button>
       <div style={styles.profileBox}>
         <h2 style={styles.subHeading}>👤 {userData.username}</h2>
         <p style={styles.paragraph}>
@@ -169,6 +176,16 @@ const styles = {
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
     marginBottom: "30px",
   },
+  logoutButton: {
+    backgroundColor: "#d9534f",
+    color: "#fff",
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "16px",
+    marginBottom: "20px",
+  },
   section: {
     backgroundColor: "#fff",
     padding: "20px",
@@ -180,12 +197,6 @@ const styles = {
   list: {
     listStyle: "none",
     padding: 0,
-  },
-  listItem: {
-    fontSize: "18px",
-    color: "#444",
-    padding: "10px",
-    borderBottom: "1px solid #ddd",
   },
   emptyText: {
     fontSize: "16px",
