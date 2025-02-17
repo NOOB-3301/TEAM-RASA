@@ -90,20 +90,7 @@ const TeacherProfile = () => {
         </div>
 
         {couses.map((course) => (
-          <div key={course._id}>
-            <h2 style={styles.subHeading}>🎓 {course.title}</h2>
-
-            <p style={styles.paragraph}>
-              <p style={styles.emptyText}>Courses Registered</p>
-              <strong>Price:</strong> {course.price}
-            </p>
-            <p style={styles.paragraph}>
-              <strong>Duration:</strong> {course.duration}
-            </p>
-            <p style={styles.paragraph}>
-              <strong>Rating:</strong> {course.rating}
-            </p>
-          </div>
+          <CourseCard key={course._id} course={course} />
         ))}
       </div>
     );
