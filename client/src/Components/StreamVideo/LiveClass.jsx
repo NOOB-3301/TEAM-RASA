@@ -20,20 +20,16 @@ if (!authToken) {
 }
 const userPayload = authToken ? jwtDecode(authToken) : "";
 
-// const token = await ("http://localhost:3000/api/v1/token/getstreamtoken", {
-//   method: "POST",
-//   Headers: {
-//     "Content-Type": "application/json",
-//     authorization: `Bearer ${authToken}`,
-//   },
-// });
-let generated;
-const token = await axios.post("http://localhost:3000/api/v1/token/getstreamtoken", {}, {
-  headers: {
-    "Content-Type": "application/json",
-    authorization: `Bearer ${userPayload.userId}`,
-  },
-})
+const token = await axios.post(
+  "http://localhost:3000/api/v1/token/getstreamtoken",
+  {},
+  {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${userPayload.userId}`,
+    },
+  }
+);
 
 console.log(token.data.generatedToken);
 const userId = userPayload.userId;
@@ -45,7 +41,11 @@ const user = {
   image: "https://getstream.io/random_svg/?id=oliver&name=Oliver",
 };
 
-const client = new StreamVideoClient({ apiKey, user, token: token.data.generatedToken });
+const client = new StreamVideoClient({
+  apiKey,
+  user,
+  token: token.data.generatedToken,
+});
 const call = client.call("default", callId);
 call.join({ create: true });
 
