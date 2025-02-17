@@ -1,7 +1,21 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
+import { useState } from "react";
 
 export default function CourseCard({ course }) {
+  const [Isuser, setIsUser] = useState(true);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userPayload = jwtDecode(token);
+      if (userPayload.role === "Teacher") {
+        setIsUser(false);
+      }
+    }
+  }, []);
+
   return (
     <motion.div
       whileHover={{
@@ -28,27 +42,53 @@ export default function CourseCard({ course }) {
       </div>
 
       {/* Course Title */}
-      <h2 className="text-2xl font-extrabold text-gray-900 mt-4">{course.title}</h2>
-      <p className="text-gray-700 mt-2 text-sm leading-relaxed">{course.desc}</p>
+      <h2 className="text-2xl font-extrabold text-gray-900 mt-4">
+        {course.title}
+      </h2>
+      <p className="text-gray-700 mt-2 text-sm leading-relaxed">
+        {course.desc}
+      </p>
 
       {/* Course Details */}
       <div className="mt-4 text-sm">
         <p className="text-gray-900 font-semibold">
-          Instructor: <span className="text-[#0F6B5E]">{course.user?.username}</span>
+          <span className="text-[#0F6B5E]">
+            Instructor: {course.user?.username}
+          </span>
         </p>
         <p className="text-gray-600">Lecture Timing: {course.lectureTiming}</p>
       </div>
 
       {/* Button */}
-      <Link to={`/courses/view/${course._id}`}>
+      {/* <Link to={`/courses/view/${course._id}`}>
         <motion.button
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           className="mt-6 w-full py-3 text-white font-semibold bg-[#0F6B5E] rounded-lg shadow-md hover:bg-[#0a4e42] transition-all transform hover:-translate-y-1"
         >
           View Course
-        </motion.button>
-      </Link>
+        </motion.button> */}
+      {Isuser ? (
+        <Link to={`/courses/details/${course._id}`}>
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-6 w-full py-3 text-white font-semibold bg-[#0F6B5E] rounded-lg shadow-md hover:bg-[#0a4e42] transition-all transform hover:-translate-y-1"
+          >
+            Enroll Course
+          </motion.button>
+        </Link>
+      ) : (
+        <Link to={`/courses/view/${course._id}`}>
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-6 w-full py-3 text-white font-semibold bg-[#0F6B5E] rounded-lg shadow-md hover:bg-[#0a4e42] transition-all transform hover:-translate-y-1"
+          >
+            View Course
+          </motion.button>
+        </Link>
+      )}
     </motion.div>
   );
 }

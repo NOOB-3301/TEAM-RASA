@@ -8,6 +8,7 @@ export default function CourseList() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState(""); // 🔹 Search state
   const itemsPerPage = 6;
 
   useEffect(() => {
@@ -33,16 +34,39 @@ export default function CourseList() {
     fetchCourses();
   }, []);
 
-  const totalPages = Math.ceil(courses.length / itemsPerPage);
+  // 🔹 Filter courses based on search term
+  const filteredCourses = courses.filter((course) =>
+    course.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedCourses = courses.slice(startIndex, startIndex + itemsPerPage);
-  const featuredCourses = courses.slice(0, 3);
-  const recentCourses = courses.slice(0, 4);
+  const paginatedCourses = filteredCourses.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+  const featuredCourses = filteredCourses.slice(0, 3);
+  const recentCourses = filteredCourses.slice(0, 4);
 
   return (
     <>
       <Navbar />
       <div className="flex flex-col space-y-12 px-6 md:px-12 bg-gradient-to-b from-[#f0f4ff] to-white py-10">
+        <div className="mt-8"></div>
+        {/* Search Bar */}
+        <div className="flex justify-center">
+          <input
+            type="text"
+            placeholder="Search courses..."
+            className="w-full max-w-lg px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1); // Reset pagination when searching
+            }}
+          />
+        </div>
+
         {/* Loading State */}
         {loading ? (
           <div className="text-center text-[#0F6B5E] font-bold text-lg">
@@ -103,31 +127,33 @@ export default function CourseList() {
               </motion.div>
 
               {/* Pagination Controls */}
-              <div className="flex justify-center items-center space-x-4 mt-6">
-                <button
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                  className="px-5 py-2 rounded-lg bg-[#0F6B5E] text-white font-semibold hover:bg-[#14887a] transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Prev
-                </button>
+              {filteredCourses.length > itemsPerPage && (
+                <div className="flex justify-center items-center space-x-4 mt-6">
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                    className="px-5 py-2 rounded-lg bg-[#0F6B5E] text-white font-semibold hover:bg-[#14887a] transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Prev
+                  </button>
 
-                <span className="text-[#0F6B5E] font-semibold">
-                  Page {currentPage} of {totalPages}
-                </span>
+                  <span className="text-[#0F6B5E] font-semibold">
+                    Page {currentPage} of {totalPages}
+                  </span>
 
-                <button
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
-                  disabled={currentPage === totalPages}
-                  className="px-5 py-2 rounded-lg bg-[#0F6B5E] text-white font-semibold hover:bg-[#14887a] transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Next
-                </button>
-              </div>
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="px-5 py-2 rounded-lg bg-[#0F6B5E] text-white font-semibold hover:bg-[#14887a] transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
             </section>
           </>
         )}

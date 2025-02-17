@@ -3,19 +3,16 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 const CourseView = () => {
-  const [videoUrl, setVideoUrl] = useState("");
   const [videoList, setVideoList] = useState([]);
   const [isStudent, setIsStudent] = useState(true);
-
-
+  const callId = crypto.randomUUID();
 
   const { id: courseId } = useParams();
-  console.log("course id", courseId);
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
       const userpayload = jwtDecode(token);
-      console.log(userpayload)
+
       if (userpayload.role === "Teacher") {
         setIsStudent(false);
       }
@@ -43,27 +40,13 @@ const CourseView = () => {
 
       {/* Main Content */}
       <div className="w-3/4 flex flex-col items-center justify-center space-y-6 p-6">
-        {videoUrl ? (
-          <div className="w-full max-w-4xl bg-black rounded-lg shadow-lg">
-            <video
-              src={videoUrl}
-              controls
-              className="w-full rounded-lg"
-            ></video>
-          </div>
-        ) : (
-          <p className="text-gray-600">Select a video to watch</p>
-        )}
-
         {/* Buttons Section */}
         <div className="flex space-x-4">
-
-          <Link to={`/courses/${courseId}/create-meeting`}>
+          <Link to={`/courses/${courseId}/${callId}`}>
             <button className="px-6 py-3 bg-[#0F6B5E] text-white font-semibold rounded-lg shadow-md hover:bg-[#14887a] transition">
-              Create Meeting
+              Start Class
             </button>
           </Link>
-
         </div>
       </div>
     </div>

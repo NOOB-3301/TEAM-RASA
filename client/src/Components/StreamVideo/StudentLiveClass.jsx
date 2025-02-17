@@ -1,30 +1,24 @@
 import {
-  CallControls,
-  CallingState,
-  OwnCapability,
   SpeakerLayout,
   StreamCall,
   StreamVideo,
   StreamVideoClient,
-  useCallStateHooks,
+  StreamTheme,
+  Call,
+  CallControls,
 } from "@stream-io/video-react-sdk";
-import { StreamTheme, ParticipantView } from "@stream-io/video-react-sdk";
 import axios from "axios";
-// import { VideoOwnCapability } from "@stream-io/video-react-sdk";
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-// Use environment variables for sensitive data
 const apiKey = "u4vswk85dwen";
 
-export default function App() {
-  // const [client, setClient] = useState<StreamVideoClient | null>(null);
-  // const [call, setCall] = useState<StreamCall | null>(null);
+export default function StudentLiveClass() {
   const [client, setClient] = useState(null);
   const [call, setCall] = useState(null);
-  const { callId: callId } = useParams(); //uuid
+  const { callId: callId } = useParams();
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -47,10 +41,10 @@ export default function App() {
       );
 
       const userId = userPayload.userId;
+
       // Set up the user object
       const user = {
         id: userId,
-        role: "admin",
         name: "RASA",
         image: "https://getstream.io/random_svg/?id=oliver&name=Oliver",
       };
@@ -62,12 +56,7 @@ export default function App() {
       });
 
       const streamCall = streamClient.call("default", callId);
-      // const r = await streamCall.updateUserPermissions({
-      //   user_id: userId,
-      //   grant_permission: ["end-call", "join-ended-call"],
-      // });
-      // console.log(r);
-      streamCall.join({ create: true });
+      streamCall.join({ create: false });
 
       setClient(streamClient);
       setCall(streamCall);
@@ -97,7 +86,6 @@ export default function App() {
   );
 }
 
-// 💡 Styles
 const styles = {
   loading: {
     color: "#fff",

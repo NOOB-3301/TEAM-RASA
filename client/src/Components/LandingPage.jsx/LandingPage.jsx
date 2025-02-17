@@ -11,9 +11,10 @@ import {
   FaChartLine,
   FaVideo,
   FaPlayCircle,
-  FaUserFriends
+  FaUserFriends,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const words = [
   "Education",
@@ -28,6 +29,21 @@ export default function LandingPage() {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    console.log("effect");
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      const userpayload = jwtDecode(token);
+      if (userpayload.role === "Teacher") {
+        window.location.href = "/teacher";
+      } else {
+        window.location.href = "/student";
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (subIndex === words[index].length + 1 && !reverse) {
@@ -51,6 +67,29 @@ export default function LandingPage() {
   useEffect(() => {
     setText(words[index].substring(0, subIndex));
   }, [subIndex, index]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/api/v1/course/getallcourse"
+        );
+        const data = await response.json();
+
+        if (response.ok) {
+          setCourses(data.fetchedCourses || []);
+        } else {
+          console.error("Error fetching courses:", data.message);
+        }
+      } catch (error) {
+        console.error("Failed to fetch courses:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   return (
     <div className="overflow-x-hidden bg-gradient-to-b from-[#f0f4ff] to-white">
@@ -138,29 +177,7 @@ export default function LandingPage() {
             Featured Courses
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Advanced Teaching Methods",
-                category: "Education",
-                rating: "4.9",
-                students: "2.5k",
-                price: "6000",
-              },
-              {
-                title: "Child Psychology Basics",
-                category: "Psychology",
-                rating: "4.8",
-                students: "1.8k",
-                price: "7999",
-              },
-              {
-                title: "Digital Classroom Management",
-                category: "Technology",
-                rating: "4.7",
-                students: "3.2k",
-                price: "9999",
-              },
-            ].map((course, idx) => (
+            {courses.map((course, idx) => (
               <div
                 key={idx}
                 className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
@@ -233,9 +250,9 @@ export default function LandingPage() {
                 icon: <FaChartLine className="text-5xl text-[#0F6B5E]" />,
                 title: "Career Growth",
                 desc: "Advance your teaching career with professional development opportunities.",
-              },{
-                icon: <FaVideo className="text-5xl text-[#0F6B5E]" />
-                ,
+              },
+              {
+                icon: <FaVideo className="text-5xl text-[#0F6B5E]" />,
                 title: "Live Class",
                 desc: "Start your learning in much better way.",
               },
@@ -245,11 +262,10 @@ export default function LandingPage() {
                 desc: "If you missed your live Class dont worry we got your back.",
               },
               {
-                icon:<FaUserFriends className="text-5xl text-[#0F6B5E]" />,
+                icon: <FaUserFriends className="text-5xl text-[#0F6B5E]" />,
                 title: "One-to-One",
-                desc: "Your very Own Personal tutor in One go"
-              }
-              
+                desc: "Your very Own Personal tutor in One go",
+              },
             ].map((feature, idx) => (
               <div
                 key={idx}
@@ -321,10 +337,10 @@ export default function LandingPage() {
             Join thousands of educators who are already making a difference with
             RASA.
           </p>
-          <Link >
-          <button className="px-8 py-4 bg-white text-[#0F6B5E] rounded-xl font-bold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-            Get Started Today
-          </button>
+          <Link>
+            <button className="px-8 py-4 bg-white text-[#0F6B5E] rounded-xl font-bold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+              Get Started Today
+            </button>
           </Link>
         </div>
       </section>

@@ -11,9 +11,9 @@ const PublicRoute = () => {
   try {
     const userPayload = jwtDecode(authToken);
     const redirectPath =
-      userPayload.role === "student"
+      userPayload.role === "Student"
         ? "/student"
-        : userPayload.role === "teacher"
+        : userPayload.role === "Teacher"
         ? "/teacher"
         : "/";
     return <Navigate to={redirectPath} />;

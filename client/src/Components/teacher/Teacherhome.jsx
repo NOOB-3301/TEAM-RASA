@@ -2,13 +2,22 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../Navbar";
 import CourseCard from "../Courses/CourseCard";
+import { Box, Card, Modal, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import axios from "axios";
 
 const userId = localStorage.getItem("u_id");
 
 function Teacherhome() {
   const [courses, setCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModal, setIsModal] = useState(false);
   const coursesPerPage = 4;
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [price, setPrice] = useState(0);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -28,6 +37,9 @@ function Teacherhome() {
 
         const data = await response.json();
         if (response.ok) {
+          for (let index = 0; index < data.fetchedCourses.length; index++) {
+            delete data.fetchedCourses[index].teacher;
+          }
           setCourses(data.fetchedCourses);
         } else {
           console.error("Failed to fetch courses:", data.message);
@@ -60,6 +72,10 @@ function Teacherhome() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="w-48 p-4 cursor-pointer bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-200"
+            onClick={() => {
+              console.log("clicked");
+              setIsModal(true);
+            }}
           >
             Publish Course
           </motion.button>
@@ -140,6 +156,117 @@ function Teacherhome() {
           )}
         </motion.div>
       </div>
+      {isModal && (
+        <Modal
+          open={isModal}
+          onClose={() => {
+            setIsModal(false);
+          }}
+          aria-labelledby="modal-title"
+          aria-describedby="modal-description"
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "80vh",
+              flexDirection: "column",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            <button
+              onClick={() => {
+                setIsModal(false);
+              }}
+            >
+              Close
+            </button>
+
+            <Card
+              variant={"outlined"}
+              style={{ width: 400, padding: 20, marginTop: 30, height: "100%" }}
+            >
+              <TextField
+                style={{ marginBottom: 10 }}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+                fullWidth={true}
+                label="Title"
+                variant="outlined"
+              />
+
+              <TextField
+                style={{ marginBottom: 10 }}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                fullWidth={true}
+                label="Description"
+                variant="outlined"
+              />
+              {/* 
+              <TextField
+                style={{ marginBottom: 10 }}
+                onChange={(e) => {
+                  setImage(e.target.value);
+                }}
+                fullWidth={true}
+                label="Image link"
+                variant="outlined"
+              /> */}
+              <input
+                type="file"
+                name="image"
+                id="image"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+
+              <TextField
+                style={{ marginBottom: 10 }}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
+                fullWidth={true}
+                label="Price"
+                variant="outlined"
+              />
+
+              <Button
+                size={"large"}
+                variant="contained"
+                onClick={async () => {
+                  const formData = new FormData();
+                  formData.append("title", title);
+                  formData.append("description", description);
+                  formData.append("image", image); // Append the file object
+                  formData.append("price", price);
+                  await axios.post(
+                    "http://localhost:3000/api/v1/course/createcourse",
+                    formData,
+                    {
+                      headers: {
+                        authorization:
+                          "Bearer " + localStorage.getItem("authToken"),
+                      },
+                    }
+                  );
+                  alert("Added course!");
+                }}
+              >
+                Add course
+              </Button>
+            </Card>
+          </Box>
+        </Modal>
+      )}
     </>
   );
 }

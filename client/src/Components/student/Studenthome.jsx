@@ -18,12 +18,18 @@ function Studenthome() {
         return;
       }
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/profile/getProfile", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "http://localhost:3000/api/v1/profile/getProfile",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setStudentName(response.data.fetchedUser.username);
       } catch (error) {
-        console.error("Error fetching student profile:", error.response?.data || error.message);
+        console.error(
+          "Error fetching student profile:",
+          error.response?.data || error.message
+        );
       }
     };
     fetchStudentData();
@@ -32,7 +38,9 @@ function Studenthome() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/course/getallcourse");
+        const response = await fetch(
+          "http://localhost:3000/api/v1/course/getallcourse"
+        );
         const data = await response.json();
         if (response.ok) {
           setCourses(data.fetchedCourses || []);
@@ -54,14 +62,20 @@ function Studenthome() {
         return;
       }
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/course/getenrollcourse", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "http://localhost:3000/api/v1/course/getenrollcourse",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         if (response.data.fetchedCourses) {
           setEnrolledCourses(response.data.fetchedCourses);
         }
       } catch (error) {
-        console.error("Error fetching enrolled courses:", error.response?.data || error.message);
+        console.error(
+          "Error fetching enrolled courses:",
+          error.response?.data || error.message
+        );
       }
     };
     fetchEnrolledCourses();
@@ -70,35 +84,32 @@ function Studenthome() {
   return (
     <>
       <Navbar />
-      <div className="relative min-h-screen bg-green-50 text-green-900 flex flex-col items-center p-6">
-        {/* Welcome Message */}
+      <div className="relative min-h-screen bg-[#E6F2EF] text-[#0F6B5E] flex flex-col items-center p-6">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-extrabold mt-16 text-green-800"
+          className="text-4xl font-extrabold mt-16"
         >
           Welcome, {studentName}!
         </motion.h1>
 
-        {/* Join a Class Button */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="mt-4 px-6 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-300"
+          className="mt-4 px-6 py-3 bg-[#0F6B5E] text-white font-bold rounded-lg shadow-md hover:bg-[#14887a] transition duration-300"
         >
           Join a Class
         </motion.button>
 
         <div className="w-full max-w-5xl mt-8">
-          {/* Enrolled Courses Section */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-white p-6 rounded-2xl shadow-md border border-green-300"
+            className="bg-white p-6 rounded-2xl shadow-md border border-[#0F6B5E]"
           >
-            <h2 className="text-xl font-bold mb-4 text-green-700">Enrolled Courses</h2>
+            <h2 className="text-xl font-bold mb-4">Enrolled Courses</h2>
             {enrolledCourses.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {enrolledCourses.map((course) => (
@@ -113,20 +124,22 @@ function Studenthome() {
                 ))}
               </div>
             ) : (
-              <p className="text-green-500 text-center">No enrolled courses yet.</p>
+              <p className="text-center text-[#14887a]">
+                No enrolled courses yet.
+              </p>
             )}
           </motion.div>
 
-          {/* Explore Courses Section */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-white p-6 rounded-2xl shadow-md mt-6 border border-green-300"
+            className="bg-white p-6 rounded-2xl shadow-md mt-6 border border-[#0F6B5E]"
           >
-            <h2 className="text-xl font-bold mb-4 text-green-700">Explore Courses</h2>
-            <p className="text-green-600 mb-4">Discover new courses and expand your knowledge!</p>
-
+            <h2 className="text-xl font-bold mb-4">Explore Courses</h2>
+            <p className="text-[#14887a] mb-4">
+              Discover new courses and expand your knowledge!
+            </p>
             {courses.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {courses.slice(0, 3).map((course) => (
@@ -141,15 +154,16 @@ function Studenthome() {
                 ))}
               </div>
             ) : (
-              <p className="text-green-500 text-center">No courses available.</p>
+              <p className="text-center text-[#14887a]">
+                No courses available.
+              </p>
             )}
 
-            {/* Browse More Button */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-300"
-              onClick={() => window.location.href = "/courses"}
+              className="mt-6 flex items-center justify-center gap-2 px-6 py-3 bg-[#0F6B5E] text-white font-bold rounded-lg shadow-md hover:bg-[#14887a] transition duration-300"
+              onClick={() => (window.location.href = "/courses")}
             >
               Browse More <FiArrowRight className="text-lg" />
             </motion.button>
