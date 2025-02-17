@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
-    name: " ",
+    name: "",
     username: "",
     email: "",
     password: "",
@@ -50,7 +50,7 @@ export default function Signup() {
           Sign Up
         </h2>
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-          <input
+        <input
             type="text"
             name="name"
             placeholder="Name"

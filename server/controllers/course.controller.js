@@ -143,6 +143,7 @@ const getCourseDetails = async (req, res) => {
 const getCourseByTeacher = async (req, res) => {
   try {
     const { u_id } = req.body;
+    console.log(u_id)
 
     if (!u_id) {
       return res.status(400).send({ message: "Teacher ID is required" });

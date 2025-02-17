@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
+import CourseCard from "./Courses/CourseCard";
 
 const TeacherProfile = () => {
   const [userData, setUserData] = useState(null);
@@ -133,9 +134,7 @@ const TeacherProfile = () => {
         <ul style={styles.list}>
           {userData.roleId.publishedCourses.length > 0 ? (
             userData.roleId.publishedCourses.map((course) => (
-              <li key={course._id} style={styles.listItem}>
-                {course.title}
-              </li>
+              <CourseCard key={course._id} course={course} />
             ))
           ) : (
             <p style={styles.emptyText}>No published courses</p>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../Navbar";
+import axios from 'axios';
 
 export default function CourseDetails() {
   const { id } = useParams();
@@ -12,24 +13,22 @@ export default function CourseDetails() {
   const [enrollError, setEnrollError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+
   useEffect(() => {
     const fetchCourseDetails = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.post(
           "http://localhost:3000/api/v1/course/getcoursedetails",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ c_id: id }),
-          }
+          { c_id: id },
+          { headers: { "Content-Type": "application/json" } }
         );
-
-        const data = await response.json();
-
-        if (response.ok) {
-          setCourse(data.fetchedCourse);
+  
+        console.log(response.data);
+        if (response.status === 200) {
+          console.log(response.data.fetchedCourse);
+          setCourse(response.data.fetchedCourse);
         } else {
-          setError(data.message || "Failed to fetch course details.");
+          setError(response.data.message || "Failed to fetch course details.");
         }
       } catch (error) {
         setError("Network error. Please try again.");
@@ -37,9 +36,10 @@ export default function CourseDetails() {
         setLoading(false);
       }
     };
-
+  
     fetchCourseDetails();
   }, [id]);
+  
 
   const handleEnroll = async () => {
     setEnrolling(true);
@@ -110,7 +110,7 @@ export default function CourseDetails() {
               />
             )}
             {/* Image Overlay */}
-            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300"></div>
+            <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300"></div>
           </div>
 
           {/* Course Title */}

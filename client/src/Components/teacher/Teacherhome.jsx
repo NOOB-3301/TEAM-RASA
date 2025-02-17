@@ -5,8 +5,12 @@ import CourseCard from "../Courses/CourseCard";
 import { Box, Card, Modal, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const userId = localStorage.getItem("u_id");
+console.log(jwtDecode(localStorage.getItem("authToken")));
+localStorage.setItem("u_id", jwtDecode(localStorage.getItem("authToken")).userId);
+
 
 function Teacherhome() {
   const [courses, setCourses] = useState([]);
@@ -19,26 +23,28 @@ function Teacherhome() {
   const [image, setImage] = useState("");
   const [price, setPrice] = useState(0);
 
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const token = localStorage.getItem("authToken");
         console.log(token);
-        const response = await fetch(
+        const response = await axios.post(
           "http://localhost:3000/api/v1/course/getcoursebyeacher",
+          { u_id: localStorage.getItem("u_id") },
           {
-            method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ u_id: userId }),
           }
         );
+  
         console.log(response);
-        const data = await response.json();
+        const data = response.data;
         console.log(data);
-        if (response.ok) {
+  
+        if (response.status === 200) {
           console.log(data.fetchedCourses);
           setCourses(data.fetchedCourses);
         } else {
@@ -48,9 +54,10 @@ function Teacherhome() {
         console.error("Error fetching courses:", error);
       }
     };
-
-    if (userId) fetchCourses();
+  
+    fetchCourses();
   }, []);
+  
 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
