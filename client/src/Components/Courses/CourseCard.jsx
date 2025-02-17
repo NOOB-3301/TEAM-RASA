@@ -2,19 +2,19 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
+const token = localStorage.getItem("authToken");
 export default function CourseCard({ course }) {
   const [IsUser, setIsUser] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    console.log(jwtDecode(token));
+    // console.log(jwtDecode(token));
     if (token) {
       const userPayload = jwtDecode(token);
       if (userPayload.role === "Teacher") {
         setIsUser(false);
       }
     }
-  }, []);
+  }, [localStorage.getItem("authToken")]);
 
   console.log("Image Link:", course.imageLink);
 
