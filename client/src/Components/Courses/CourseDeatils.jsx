@@ -93,27 +93,29 @@ export default function CourseDetails() {
       <div className="min-h-screen overflow-auto bg-gradient-to-b from-[#c6e0ff] via-[#f0f4ff] to-white flex flex-col items-center">
         <Navbar />
         <div className="mt-28"></div>
+
         <motion.div
-          className="w-full max-w-5xl mx-auto flex-1 p-8 bg-white shadow-lg rounded-lg mb-10"
+          className="w-full max-w-5xl mx-auto flex-1 p-10 bg-white shadow-lg rounded-xl transition-all duration-300 group hover:shadow-2xl hover:scale-[1.02]"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           {/* Course Image */}
-          {course.imageLink && (
-            <motion.img
-              src={course.imageLink}
-              alt={course.title}
-              className="w-full h-64 object-cover rounded-lg shadow-md"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            />
-          )}
+          <div className="relative overflow-hidden rounded-lg">
+            {course.imageLink && (
+              <motion.img
+                src={course.imageLink}
+                alt={course.title}
+                className="w-full h-64 object-cover rounded-lg shadow-md transition-transform duration-300 group-hover:scale-105"
+              />
+            )}
+            {/* Image Overlay */}
+            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300"></div>
+          </div>
 
           {/* Course Title */}
           <motion.h1
-            className="text-3xl font-bold text-green-700 mt-4"
+            className="text-4xl font-extrabold text-green-800 mt-6"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -123,7 +125,7 @@ export default function CourseDetails() {
 
           {/* Description */}
           <motion.p
-            className="text-gray-700 mt-2 text-lg"
+            className="text-gray-700 mt-4 text-lg leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
@@ -133,16 +135,16 @@ export default function CourseDetails() {
 
           {/* Course Details */}
           <motion.div
-            className="mt-6 space-y-2"
+            className="mt-6 space-y-3 text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
-            <p className="text-lg">
-              <strong>👨‍🏫 Teacher:</strong> {course.user?.username || "Unknown"}
+            <p className="text-gray-900 font-semibold">
+              👨‍🏫 <span className="text-green-700">Instructor:</span> {course.user?.username || "Unknown"}
             </p>
-            <p className="text-lg">
-              <strong>🕒 Lecture Timing:</strong> {course.lectureTiming}
+            <p className="text-gray-900 font-semibold">
+              🕒 <span className="text-blue-600">Lecture Timing:</span> {course.lectureTiming}
             </p>
           </motion.div>
 
@@ -151,17 +153,33 @@ export default function CourseDetails() {
             onClick={handleEnroll}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="mt-6 px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-200"
+            className="mt-8 w-full py-3 text-white font-bold bg-gradient-to-r from-green-500 to-green-700 rounded-lg shadow-md hover:from-green-600 hover:to-green-800 transition-all transform hover:-translate-y-1"
             disabled={enrolling}
           >
-            {enrolling ? "Enrolling..." : "Enroll Now"}
+            {enrolling ? "Enrolling..." : "🚀 Enroll Now"}
           </motion.button>
 
           {/* Success/Error Message */}
           {successMessage && (
-            <p className="mt-4 text-green-600">{successMessage}</p>
+            <motion.p
+              className="mt-4 text-center text-green-700 font-semibold"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              ✅ {successMessage}
+            </motion.p>
           )}
-          {enrollError && <p className="mt-4 text-red-600">{enrollError}</p>}
+          {enrollError && (
+            <motion.p
+              className="mt-4 text-center text-red-600 font-semibold"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              ❌ {enrollError}
+            </motion.p>
+          )}
         </motion.div>
       </div>
     </>

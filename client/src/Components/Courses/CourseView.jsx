@@ -8,37 +8,50 @@ const CourseView = () => {
 
   const { id: courseId } = useParams();
 
-  console.log(courseId);
-
   return (
-    <div className="flex h-screen p-4 bg-gray-100">
-      {/* Video List Section */}
-      <div className="w-1/3 bg-white p-4 rounded-lg shadow-lg overflow-y-auto">
-        <h2 className="text-lg font-semibold mb-4">Course Videos</h2>
-        <ul>
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar - Video List */}
+      <div className="w-1/4 bg-white shadow-lg rounded-lg p-4 overflow-y-auto">
+        <h2 className="text-xl font-bold text-[#0F6B5E] mb-4">Course Videos</h2>
+        <ul className="space-y-2">
           {videoList.map((video, index) => (
             <li
               key={index}
-              className="p-2 border-b cursor-pointer hover:bg-gray-200"
+              className="p-3 bg-[#14887a] text-white rounded-lg shadow-md cursor-pointer hover:bg-[#0F6B5E] transition"
               onClick={() => setVideoUrl(video.url)}
             >
               <p className="font-medium">{video.title}</p>
-              <p className="text-sm text-gray-600">{video.duration}</p>
+              <p className="text-sm opacity-80">{video.duration}</p>
             </li>
           ))}
         </ul>
       </div>
 
-      {/* Button Section */}
-      <div className="w-1/3 flex flex-col items-center justify-center space-y-4 p-4">
-        <Link to={`/courses/${courseId}/create-meeting`}>
-          <button className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition">
-            Create Meeting
+      {/* Main Content */}
+      <div className="w-3/4 flex flex-col items-center justify-center space-y-6 p-6">
+        {videoUrl ? (
+          <div className="w-full max-w-4xl bg-black rounded-lg shadow-lg">
+            <video
+              src={videoUrl}
+              controls
+              className="w-full rounded-lg"
+            ></video>
+          </div>
+        ) : (
+          <p className="text-gray-600">Select a video to watch</p>
+        )}
+
+        {/* Buttons Section */}
+        <div className="flex space-x-4">
+          <Link to={`/courses/${courseId}/create-meeting`}>
+            <button className="px-6 py-3 bg-[#0F6B5E] text-white font-semibold rounded-lg shadow-md hover:bg-[#14887a] transition">
+              Create Meeting
+            </button>
+          </Link>
+          <button className="px-6 py-3 bg-[#14887a] text-white font-semibold rounded-lg shadow-md hover:bg-[#0F6B5E] transition">
+            Add Video
           </button>
-        </Link>
-        <button className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition">
-          Add Video
-        </button>
+        </div>
       </div>
     </div>
   );

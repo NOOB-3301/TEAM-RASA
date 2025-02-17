@@ -17,8 +17,7 @@ export default function CourseList() {
           "http://localhost:3000/api/v1/course/getallcourse"
         );
         const data = await response.json();
-        console.log(data.fetchedCourses);
-        console.log(data.fetchedCourses[13].user);
+
         if (response.ok) {
           setCourses(data.fetchedCourses || []);
         } else {
@@ -43,18 +42,17 @@ export default function CourseList() {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col space-y-12 px-4 md:px-12 bg-gradient-to-b from-[#f0f4ff] to-white">
-        <div className="mt-12"></div>
-
+      <div className="flex flex-col space-y-12 px-6 md:px-12 bg-gradient-to-b from-[#f0f4ff] to-white py-10">
+        {/* Loading State */}
         {loading ? (
-          <div className="text-center text-green-700 font-bold text-lg">
+          <div className="text-center text-[#0F6B5E] font-bold text-lg">
             Loading courses...
           </div>
         ) : (
           <>
             {/* Featured Courses */}
             <section>
-              <h2 className="text-2xl font-bold text-center text-green-700">
+              <h2 className="text-2xl font-bold text-center text-[#0F6B5E]">
                 Featured Courses
               </h2>
               <motion.div
@@ -71,7 +69,7 @@ export default function CourseList() {
 
             {/* Recently Published */}
             <section>
-              <h2 className="text-2xl font-bold text-center text-green-700">
+              <h2 className="text-2xl font-bold text-center text-[#0F6B5E]">
                 Recently Published
               </h2>
               <motion.div
@@ -88,7 +86,7 @@ export default function CourseList() {
 
             {/* Explore Courses (With Pagination) */}
             <section>
-              <h2 className="text-2xl font-bold text-center text-green-700">
+              <h2 className="text-2xl font-bold text-center text-[#0F6B5E]">
                 Explore Courses
               </h2>
               <motion.div
@@ -105,18 +103,18 @@ export default function CourseList() {
               </motion.div>
 
               {/* Pagination Controls */}
-              <div className="flex justify-center space-x-4 mt-6">
+              <div className="flex justify-center items-center space-x-4 mt-6">
                 <button
                   onClick={() =>
                     setCurrentPage((prev) => Math.max(prev - 1, 1))
                   }
                   disabled={currentPage === 1}
-                  className="px-4 py-2 rounded bg-green-500 hover:bg-green-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-5 py-2 rounded-lg bg-[#0F6B5E] text-white font-semibold hover:bg-[#14887a] transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Prev
                 </button>
 
-                <span className="text-green-700 font-semibold">
+                <span className="text-[#0F6B5E] font-semibold">
                   Page {currentPage} of {totalPages}
                 </span>
 
@@ -125,7 +123,7 @@ export default function CourseList() {
                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                   }
                   disabled={currentPage === totalPages}
-                  className="px-4 py-2 rounded bg-green-500 hover:bg-green-600 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-5 py-2 rounded-lg bg-[#0F6B5E] text-white font-semibold hover:bg-[#14887a] transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>
