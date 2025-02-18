@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../Navbar";
 import CourseCard from "../Courses/CourseCard";
-import { Box, Card, Modal, TextField } from "@mui/material";
+import { Box, Card, Modal, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-// console.log(jwtDecode(localStorage.getItem("authToken")));
-
 if (localStorage.getItem("authToken")) {
-  
-  localStorage.setItem("u_id", jwtDecode(localStorage.getItem("authToken")).userId);
+  localStorage.setItem(
+    "u_id",
+    jwtDecode(localStorage.getItem("authToken")).userId
+  );
 }
-
 
 function Teacherhome() {
   const [courses, setCourses] = useState([]);
@@ -23,15 +22,13 @@ function Teacherhome() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
-  const [price, setPrice] = useState(0);
-
+  const [image, setImage] = useState(null);
+  const [price, setPrice] = useState("");
 
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        console.log(token);
         const response = await axios.post(
           "http://localhost:3000/api/v1/course/getcoursebyeacher",
           { u_id: localStorage.getItem("u_id") },
@@ -42,25 +39,19 @@ function Teacherhome() {
             },
           }
         );
-  
-        console.log(response);
-        const data = response.data;
-        console.log(data);
-  
+        
         if (response.status === 200) {
-          console.log(data.fetchedCourses);
-          setCourses(data.fetchedCourses);
+          setCourses(response.data.fetchedCourses);
         } else {
-          console.error("Failed to fetch courses:", data.message);
+          console.error("Failed to fetch courses:", response.data.message);
         }
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
     };
-  
+
     fetchCourses();
   }, []);
-  
 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
@@ -71,42 +62,29 @@ function Teacherhome() {
     <>
       <Navbar />
 
-      <div className="flex flex-col items-center min-h-screen bg-gradient-to-b from-green-100 to-white ">
-        {/* Buttons for "Create Meeting" and "Publish Course" */}
+      <div className="flex flex-col items-center min-h-screen bg-gradient-to-b from-green-100 to-white">
         <div className="mt-28"></div>
-
-        {/* Buttons */}
-        <div className="flex gap-4 mb-6">
-          {" "}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-48 p-4 cursor-pointer bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-200"
-            onClick={() => {
-              console.log("clicked");
-              setIsModal(true);
-            }}
-          >
-            Publish Course
-          </motion.button>
-        </div>
+        
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="w-48 p-4 cursor-pointer bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-700 transition duration-200"
+          onClick={() => setIsModal(true)}
+        >
+          Publish Course
+        </motion.button>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md"
+          className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md mt-6"
         >
-          <h2 className="text-xl font-bold mb-4 text-green-700">
+          <Typography variant="h5" className="text-green-700 font-bold mb-4">
             Published Courses
-          </h2>
+          </Typography>
           {currentCourses.length > 0 ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ staggerChildren: 0.2 }}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-            >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {currentCourses.map((course) => (
                 <motion.div
                   key={course._id}
@@ -117,166 +95,103 @@ function Teacherhome() {
                   <CourseCard course={course} />
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           ) : (
-            <p className="text-gray-600 text-center">
+            <Typography className="text-gray-600 text-center">
               No courses published yet.
-            </p>
+            </Typography>
           )}
 
           {courses.length > coursesPerPage && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="flex justify-between items-center mt-6"
-            >
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+            <div className="flex justify-between items-center mt-6">
+              <Button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 rounded-lg text-white font-bold ${
-                  currentPage === 1
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-green-600 hover:bg-green-700"
-                } transition duration-200`}
+                variant="contained"
+                color={currentPage === 1 ? "secondary" : "primary"}
               >
                 Previous
-              </motion.button>
-              <span className="text-lg font-semibold">
-                Page {currentPage} of {totalPages}
-              </span>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
+              </Button>
+              <Typography>Page {currentPage} of {totalPages}</Typography>
+              <Button
+                onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 rounded-lg text-white font-bold ${
-                  currentPage === totalPages
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-green-600 hover:bg-green-700"
-                } transition duration-200`}
+                variant="contained"
+                color={currentPage === totalPages ? "secondary" : "primary"}
               >
                 Next
-              </motion.button>
-            </motion.div>
+              </Button>
+            </div>
           )}
         </motion.div>
       </div>
-      {isModal && (
-        <Modal
-          open={isModal}
-          onClose={() => {
-            setIsModal(false);
+      
+      <Modal open={isModal} onClose={() => setIsModal(false)}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
           }}
-          aria-labelledby="modal-title"
-          aria-describedby="modal-description"
         >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "80vh",
-              flexDirection: "column",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              bgcolor: "background.paper",
-              boxShadow: 24,
-              p: 4,
-            }}
-          >
-            <button
-              onClick={() => {
-                setIsModal(false);
+          <Card sx={{ width: 400, p: 3 }}>
+            <TextField
+              label="Title"
+              fullWidth
+              margin="normal"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <TextField
+              label="Description"
+              fullWidth
+              margin="normal"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <div>{File}</div>
+            <Button variant="contained" component="label" fullWidth sx={{ my: 2 }}>
+              Upload Image
+              <input type="file" hidden onChange={(e) => setImage(e.target.files[0])} />
+              
+            </Button>
+            <TextField
+              label="Price"
+              fullWidth
+              margin="normal"
+              onChange={(e) => setPrice(e.target.value)}
+            />
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={async () => {
+                const formData = new FormData();
+                formData.append("title", title);
+                formData.append("description", description);
+                formData.append("image", image);
+                formData.append("price", price);
+                await axios.post(
+                  "http://localhost:3000/api/v1/course/createcourse",
+                  formData,
+                  {
+                    headers: { authorization: `Bearer ${localStorage.getItem("authToken")}` },
+                  }
+                );
+                alert("Added course!");
               }}
             >
-              Close
-            </button>
-
-            <Card
-              variant={"outlined"}
-              style={{ width: 400, padding: 20, marginTop: 30, height: "100%" }}
-            >
-              <TextField
-                style={{ marginBottom: 10 }}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-                fullWidth={true}
-                label="Title"
-                variant="outlined"
-              />
-
-              <TextField
-                style={{ marginBottom: 10 }}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-                fullWidth={true}
-                label="Description"
-                variant="outlined"
-              />
-              {/* 
-              <TextField
-                style={{ marginBottom: 10 }}
-                onChange={(e) => {
-                  setImage(e.target.value);
-                }}
-                fullWidth={true}
-                label="Image link"
-                variant="outlined"
-              /> */}
-              <input
-                type="file"
-                name="image"
-                id="image"
-                onChange={(e) => setImage(e.target.files[0])}
-              />
-
-              <TextField
-                style={{ marginBottom: 10 }}
-                onChange={(e) => {
-                  setPrice(e.target.value);
-                }}
-                fullWidth={true}
-                label="Price"
-                variant="outlined"
-              />
-
-              <Button
-                size={"large"}
-                variant="contained"
-                onClick={async () => {
-                  const formData = new FormData();
-                  formData.append("title", title);
-                  formData.append("description", description);
-                  formData.append("image", image); // Append the file object
-                  formData.append("price", price);
-                  await axios.post(
-                    "http://localhost:3000/api/v1/course/createcourse",
-                    formData,
-                    {
-                      headers: {
-                        authorization:
-                          "Bearer " + localStorage.getItem("authToken"),
-                      },
-                    }
-                  );
-                  alert("Added course!");
-                }}
-              >
-                Add course
-              </Button>
-            </Card>
-          </Box>
-        </Modal>
-      )}
+              Add Course
+            </Button>
+          </Card>
+        </Box>
+      </Modal>
     </>
   );
 }
