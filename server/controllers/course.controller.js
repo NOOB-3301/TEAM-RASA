@@ -114,6 +114,7 @@ const getAllCourses = async (req, res) => {
 };
 
 const getCourseDetails = async (req, res) => {
+  console.log("details hit")
   try {
     const { c_id } = req.body;
 
