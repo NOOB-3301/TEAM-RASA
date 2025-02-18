@@ -182,14 +182,15 @@ export default function LandingPage() {
                 key={idx}
                 className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group"
               >
-                <div className="h-48 bg-gradient-to-r from-[#5a5d85] to-[#14887a] relative overflow-hidden">
+                {/* <div className="h-48 bg-gradient-to-r from-[#5a5d85] to-[#14887a] relative overflow-hidden"> */}
                 <div className="h-48 relative overflow-hidden">
                   <img
                     src={course.imageLink}
                     alt={course.title}
                     className="w-full h-full object-cover"
                   />
-                </div>                </div>
+                </div>                
+                {/* </div> */}
                 <div className="p-6">
                   <div className="text-sm text-[#0F6B5E] font-semibold mb-2">
                     {course.category}
@@ -212,143 +213,143 @@ export default function LandingPage() {
                 </div>
               </div>
             ))}
-          </div>
         </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-16">
-            Why Choose Us?
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: (
-                  <FaChalkboardTeacher className="text-5xl text-[#0F6B5E]" />
-                ),
-                title: "Expert Teachers",
-                desc: "Learn from certified and experienced educators passionate about student success.",
-              },
-              {
-                icon: <FaUsers className="text-5xl text-[#0F6B5E]" />,
-                title: "Community Support",
-                desc: "Join a thriving community of educators and learners for collaborative growth.",
-              },
-              {
-                icon: <FaBook className="text-5xl text-[#0F6B5E]" />,
-                title: "Quality Content",
-                desc: "Access thoroughly vetted, professionally designed course materials.",
-              },
-              {
-                icon: <FaGlobe className="text-5xl text-[#0F6B5E]" />,
-                title: "Global Reach",
-                desc: "Connect with educators and students from around the world.",
-              },
-              {
-                icon: <FaHandsHelping className="text-5xl text-[#0F6B5E]" />,
-                title: "Mentorship",
-                desc: "Get personalized guidance from experienced professionals.",
-              },
-              {
-                icon: <FaChartLine className="text-5xl text-[#0F6B5E]" />,
-                title: "Career Growth",
-                desc: "Advance your teaching career with professional development opportunities.",
-              },
-              {
-                icon: <FaVideo className="text-5xl text-[#0F6B5E]" />,
-                title: "Live Class",
-                desc: "Start your learning in much better way.",
-              },
-              {
-                icon: <FaPlayCircle className="text-5xl text-[#0F6B5E]" />,
-                title: "Recorded Classes",
-                desc: "If you missed your live Class dont worry we got your back.",
-              },
-              {
-                icon: <FaUserFriends className="text-5xl text-[#0F6B5E]" />,
-                title: "One-to-One",
-                desc: "Your very Own Personal tutor in One go",
-              },
-            ].map((feature, idx) => (
-              <div
-                key={idx}
-                className="group p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="flex flex-col items-center text-center space-y-4">
-                  <div className="transform group-hover:scale-110 transition-transform duration-300">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {feature.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center mb-16">
-            What Our Users Say
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                name: "RASA JAISWAL",
-                role: "Math Teacher",
-                text: "RASA has transformed my teaching approach. The resources and community support are invaluable.",
-              },
-              {
-                name: "RASA SHAW",
-                role: "Science Educator",
-                text: "The professional development opportunities here are outstanding. I've grown so much as an educator.",
-              },
-            ].map((testimonial, idx) => (
-              <div
-                key={idx}
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="flex flex-col space-y-4">
-                  <div className="text-[#0F6B5E]">★★★★★</div>
-                  <p className="text-gray-600 italic">{testimonial.text}</p>
-                  <div>
-                    <div className="font-bold">{testimonial.name}</div>
-                    <div className="text-sm text-gray-500">
-                      {testimonial.role}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-[#0F6B5E]">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-bold text-white mb-8">
-            Ready to Transform Your Teaching Journey?
-          </h2>
-          <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
-            Join thousands of educators who are already making a difference with
-            RASA.
-          </p>
-          <Link>
-            <button className="px-8 py-4 bg-white text-[#0F6B5E] rounded-xl font-bold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
-              Get Started Today
-            </button>
-          </Link>
-        </div>
-      </section>
     </div>
+      </section >
+
+    {/* Why Choose Us Section */ }
+    < section className = "py-20" >
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-16">
+          Why Choose Us?
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            {
+              icon: (
+                <FaChalkboardTeacher className="text-5xl text-[#0F6B5E]" />
+              ),
+              title: "Expert Teachers",
+              desc: "Learn from certified and experienced educators passionate about student success.",
+            },
+            {
+              icon: <FaUsers className="text-5xl text-[#0F6B5E]" />,
+              title: "Community Support",
+              desc: "Join a thriving community of educators and learners for collaborative growth.",
+            },
+            {
+              icon: <FaBook className="text-5xl text-[#0F6B5E]" />,
+              title: "Quality Content",
+              desc: "Access thoroughly vetted, professionally designed course materials.",
+            },
+            {
+              icon: <FaGlobe className="text-5xl text-[#0F6B5E]" />,
+              title: "Global Reach",
+              desc: "Connect with educators and students from around the world.",
+            },
+            {
+              icon: <FaHandsHelping className="text-5xl text-[#0F6B5E]" />,
+              title: "Mentorship",
+              desc: "Get personalized guidance from experienced professionals.",
+            },
+            {
+              icon: <FaChartLine className="text-5xl text-[#0F6B5E]" />,
+              title: "Career Growth",
+              desc: "Advance your teaching career with professional development opportunities.",
+            },
+            {
+              icon: <FaVideo className="text-5xl text-[#0F6B5E]" />,
+              title: "Live Class",
+              desc: "Start your learning in much better way.",
+            },
+            {
+              icon: <FaPlayCircle className="text-5xl text-[#0F6B5E]" />,
+              title: "Recorded Classes",
+              desc: "If you missed your live Class dont worry we got your back.",
+            },
+            {
+              icon: <FaUserFriends className="text-5xl text-[#0F6B5E]" />,
+              title: "One-to-One",
+              desc: "Your very Own Personal tutor in One go",
+            },
+          ].map((feature, idx) => (
+            <div
+              key={idx}
+              className="group p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="transform group-hover:scale-110 transition-transform duration-300">
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {feature.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      </section >
+
+    {/* Testimonials Section */ }
+    < section className = "py-20 bg-gray-50" >
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-16">
+          What Our Users Say
+        </h2>
+        <div className="grid md:grid-cols-2 gap-8">
+          {[
+            {
+              name: "RASA JAISWAL",
+              role: "Math Teacher",
+              text: "RASA has transformed my teaching approach. The resources and community support are invaluable.",
+            },
+            {
+              name: "RASA SHAW",
+              role: "Science Educator",
+              text: "The professional development opportunities here are outstanding. I've grown so much as an educator.",
+            },
+          ].map((testimonial, idx) => (
+            <div
+              key={idx}
+              className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <div className="flex flex-col space-y-4">
+                <div className="text-[#0F6B5E]">★★★★★</div>
+                <p className="text-gray-600 italic">{testimonial.text}</p>
+                <div>
+                  <div className="font-bold">{testimonial.name}</div>
+                  <div className="text-sm text-gray-500">
+                    {testimonial.role}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      </section >
+
+    {/* CTA Section */ }
+    < section className = "py-20 bg-[#0F6B5E]" >
+      <div className="container mx-auto px-6 text-center">
+        <h2 className="text-4xl font-bold text-white mb-8">
+          Ready to Transform Your Teaching Journey?
+        </h2>
+        <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+          Join thousands of educators who are already making a difference with
+          RASA.
+        </p>
+        <Link>
+          <button className="px-8 py-4 bg-white text-[#0F6B5E] rounded-xl font-bold hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+            Get Started Today
+          </button>
+        </Link>
+      </div>
+      </section >
+    </div >
   );
 }
